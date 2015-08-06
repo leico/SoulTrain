@@ -59,6 +59,13 @@ class BlurDraw{
 		};
 
 		/* =================================================== *
+		 * Osc(oscemessage)                                    *
+		 * =================================================== */
+		void Osc(ofxOscMessage& m){
+			if(m.getAddress() == "/Blur/Opacity/x") opacity = m.getArgAsFloat(0) * 255;
+		}
+
+		/* =================================================== *
 		 * Draw()                                              *
 		 * =================================================== */
 		void Draw(int x, int y)              { blur.draw(x, y); }

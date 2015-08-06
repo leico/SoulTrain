@@ -9,6 +9,8 @@ void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofBackground(0);
 
+	receiver.setup(9000);
+
 	width  = ofGetWidth ();
 	height = ofGetHeight();
 
@@ -56,6 +58,13 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+
+	while(receiver.hasWaitingMessages()){
+		ofxOscMessage m;
+		receiver.getNextMessage(&m);
+		
+		blur.Osc(m);
+	}
 
 	plane.Update();
 	wave .Update();

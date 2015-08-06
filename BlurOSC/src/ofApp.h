@@ -40,6 +40,8 @@ class ofApp : public ofxiOSApp{
 
 				void audioIn(float *input, int buffersize, int n_channel);
 
+				ofxOscReceiver receiver;
+
 				BlurDraw blur;
 				
 				PlaneDraw plane;
