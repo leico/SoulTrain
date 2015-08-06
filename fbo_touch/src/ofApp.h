@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
-#include "ofxOsc.h"
 
 class ofApp : public ofxiOSApp{
 	
@@ -24,21 +23,11 @@ class ofApp : public ofxiOSApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
 
+				float posX, posY;
 
-				const static int w = 100;
-				const static int h = 100;
-				const static int num = w * h;
+				bool touched;
 
 				ofFbo fbo;
-
-				ofVbo        vbo;
-				ofVec3f      verts  [num];
-				ofFloatColor vertclr[num];
-
-				ofxOscReceiver receiver;
-
-				float pan, tilt, roll, scale;
-
 
 };
 
