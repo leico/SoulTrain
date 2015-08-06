@@ -42,17 +42,15 @@ void ofApp::setup(){
 
 	ofSoundStreamSetup(0, 1, SAMPLING_RATE, BUF_SIZE, 1);
 
-	low .Setup<AttackDetection :: LOWPASS> (200 , 1, SAMPLING_RATE);
-	high.Setup<AttackDetection :: HIGHPASS>(8000, 1, SAMPLING_RATE);
-
-	lowthresh  = 0.1;
-	highthresh = 0.8;
-
-	low .Threshold(lowthresh);
-	high.Threshold(highthresh);
-
+	lpf.Frequency(200);
+	lpf.Q(1);
+	lpf.SamplingRate(SAMPLING_RATE);
+	lpf.Setup(0.1);
 	
-
+	hpf.Frequency(8000);
+	hpf.Q(1);
+	hpf.SamplingRate(SAMPLING_RATE);
+	hpf.Setup(0.8);
 
 }
 
@@ -62,7 +60,9 @@ void ofApp::update(){
 	while(receiver.hasWaitingMessages()){
 		ofxOscMessage m;
 		receiver.getNextMessage(&m);
-		
+	
+		lpf .Osc(m);
+		hpf .Osc(m);
 		blur.Osc(m);
 	}
 
@@ -137,12 +137,15 @@ void ofApp::deviceOrientationChanged(int newOrientation){
 
 //--------------------------------------------------------------
 void ofApp::audioIn(float *input, int buffersize, int n_channel){
-	
-	bool lowattack  = low.Process <AttackDetection :: AVERAGE> (input, buffersize);
-	bool highattack = high.Process<AttackDetection :: MAXVALUE>(input, buffersize);
 
-	plane.AudioIn(input, buffersize, lowattack, highattack);
-	wave .AudioIn(input, buffersize, lowattack, highattack);
-	accel.AudioIn(input, buffersize, lowattack, highattack);
+	lpf.AudioIn(input, buffersize);
+	hpf.AudioIn(input, buffersize);
+
+	bool kick  = lpf.isAttack_Average();
+	bool hihat = hpf.isAttack_Peak();
+
+	plane.AudioIn(input, buffersize, kick, hihat);
+	wave .AudioIn(input, buffersize, kick, hihat);
+	accel.AudioIn(input, buffersize, kick, hihat);
 
 }

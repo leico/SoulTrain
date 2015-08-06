@@ -14,10 +14,8 @@
 #include "AccelDraw.h"
 
 #include "BlurDraw.h"
-#include "AttackDetection.h"
-
-
-/* 波形クラス化、音によるフェードつける。 */
+#include "LPF.h"
+#include "HPF.h"
 
 class ofApp : public ofxiOSApp{
 	
@@ -47,19 +45,15 @@ class ofApp : public ofxiOSApp{
 				PlaneDraw plane;
 				WaveDraw  wave;
 				AccelDraw accel;
-				
+
+				LPF lpf;
+				HPF hpf;
 
 				static const int BUF_SIZE      = 512;
 				static const int SAMPLING_RATE = 44100;
 
 				int width;
 				int height;
-
-				float lowthresh;
-				float highthresh;
-
-				AttackDetection low;
-				AttackDetection high;
 
 };
 #endif

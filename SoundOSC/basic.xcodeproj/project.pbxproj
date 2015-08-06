@@ -11,7 +11,6 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4A915AEC1B677800003FACB5 /* BiQuadFilter.h in Sources */ = {isa = PBXBuildFile; fileRef = 4A915AEA1B677800003FACB5 /* BiQuadFilter.h */; };
-		4A915AF41B67CE8E003FACB5 /* AttackDetection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A915AF31B67CE8E003FACB5 /* AttackDetection.mm */; };
 		4A915B391B6879B6003FACB5 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A915B131B6879B6003FACB5 /* IpEndpointName.cpp */; };
 		4A915B3A1B6879B6003FACB5 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A915B181B6879B6003FACB5 /* NetworkingUtils.cpp */; };
 		4A915B3B1B6879B6003FACB5 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A915B191B6879B6003FACB5 /* UdpSocket.cpp */; };
@@ -70,8 +69,6 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* ofxiOS_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxiOS_Prefix.pch; sourceTree = "<group>"; };
 		4A915AEA1B677800003FACB5 /* BiQuadFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BiQuadFilter.h; sourceTree = "<group>"; };
-		4A915AF11B679CA6003FACB5 /* AttackDetection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttackDetection.h; sourceTree = "<group>"; };
-		4A915AF31B67CE8E003FACB5 /* AttackDetection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AttackDetection.mm; sourceTree = "<group>"; };
 		4A915AF81B67DC6C003FACB5 /* BlurDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurDraw.h; sourceTree = "<group>"; };
 		4A915AFE1B67E2BF003FACB5 /* PlaneDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneDraw.h; sourceTree = "<group>"; };
 		4A915B091B685BAA003FACB5 /* BaseDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDraw.h; sourceTree = "<group>"; };
@@ -113,6 +110,8 @@
 		4A915B491B690BB6003FACB5 /* WaveDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaveDraw.h; sourceTree = "<group>"; };
 		4AAFCEDF1B6AA6DE00156D7B /* AccelDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccelDraw.h; sourceTree = "<group>"; };
 		4AAFCEED1B6B661100156D7B /* Change.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Change.mm; sourceTree = "<group>"; };
+		4AAFCEF31B6B8B9000156D7B /* LPF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LPF.h; sourceTree = "<group>"; };
+		4AAFCEF41B6B9B7100156D7B /* HPF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPF.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		678E130717951530005B6D19 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "bin/data/Icon@2x.png"; sourceTree = "<group>"; };
@@ -312,16 +311,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		4A915B471B687CD0003FACB5 /* Sound */ = {
-			isa = PBXGroup;
-			children = (
-				4A915AF11B679CA6003FACB5 /* AttackDetection.h */,
-				4A915AF31B67CE8E003FACB5 /* AttackDetection.mm */,
-				4A915AEA1B677800003FACB5 /* BiQuadFilter.h */,
-			);
-			name = Sound;
-			sourceTree = "<group>";
-		};
 		BB16E9930F2B1E5900518274 /* libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,7 +358,9 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4A915B471B687CD0003FACB5 /* Sound */,
+				4A915AEA1B677800003FACB5 /* BiQuadFilter.h */,
+				4AAFCEF41B6B9B7100156D7B /* HPF.h */,
+				4AAFCEF31B6B8B9000156D7B /* LPF.h */,
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* ofApp.mm */,
 				E4D8936C11527B74007E1F53 /* ofApp.h */,
@@ -501,7 +492,6 @@
 				4A915B391B6879B6003FACB5 /* IpEndpointName.cpp in Sources */,
 				4A915B441B6879B6003FACB5 /* ofxOscParameterSync.cpp in Sources */,
 				4A915B3C1B6879B6003FACB5 /* NetworkingUtilsWin.cpp in Sources */,
-				4A915AF41B67CE8E003FACB5 /* AttackDetection.mm in Sources */,
 				4A915B3D1B6879B6003FACB5 /* UdpSocketWin.cpp in Sources */,
 				4AAFCEEE1B6B661100156D7B /* Change.mm in Sources */,
 			);
