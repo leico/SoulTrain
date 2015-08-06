@@ -17,10 +17,15 @@ void ofApp::setup(){
 
 	blur.Setup(16);
 
-	plane.Setup(
-		ofRectangle(0, 0, ofGetWidth(), ofGetHeight()), 
-		ofColor(255)
+	plane.Rect(
+		ofRectangle(0, 0, width, height)
 	);
+	plane.Color(
+		  ofColor(255)
+		, ofColor(255)
+		, 0
+	);
+	plane.Opacity(0, 0, 0.05);
 
 	ofSoundStreamSetup(0, 1, SAMPLING_RATE, BUF_SIZE, 1);
 
@@ -51,8 +56,11 @@ void ofApp::update(){
 	signalwave.clearVertices();
 	signalwave.addVertices(vertices, width);
 
+	/*
 	o_low  = (o_low  - 8 < 0) ? 0 : o_low  - 8;
 	o_high = (o_high - 8 < 0) ? 0 : o_high - 8;
+	*/
+	plane.Update();
 
 }
 
@@ -149,12 +157,14 @@ void ofApp::audioIn(float *input, int buffersize, int n_channel){
 		vertices[i]    .y = vertices[i + 2]    .y;
 		vertices[i + 1].y = vertices[i + 2 + 1].y;
 	}
+
 	float tmp =  sum / buffersize * 300;
-	ofLogVerbose() << tmp;
 	vertices[width - 2].y = base + tmp;
 	vertices[width - 1].y = base - tmp;
 
-	plane.isDraw( low.Process<AttackDetection :: AVERAGE> (input, buffersize));
-	o_high = high.Process<AttackDetection :: MAXVALUE>(input, buffersize) ? 255 : o_high;
+	bool lowattack  = low.Process <AttackDetection :: AVERAGE> (input, buffersize);
+	bool highattack = high.Process<AttackDetection :: MAXVALUE>(input, buffersize);
+
+	plane.AudioIn(input, buffersize, lowattack, highattack);
 
 }

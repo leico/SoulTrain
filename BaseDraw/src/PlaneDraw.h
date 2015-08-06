@@ -10,42 +10,75 @@
 #define __basic__PlaneDraw__
 
 #include "ofMain.h"
+#include "BaseDraw.h"
 
-class PlaneDraw{
+class PlaneDraw : public BaseDraw{
 
 	private:
-		bool draw;
-
 		ofRectangle rect;
-		ofColor     clr;
 
 	public:
-		 PlaneDraw(void) : rect(0, 0, 0, 0), clr(0) {};
+		/* ============================================ *
+		 * Constructor/Destructor                       *
+		 * ============================================ */
+		 PlaneDraw(void) : rect(0, 0, 0, 0){};
 		~PlaneDraw(void){};
 
-		void Setup(const ofRectangle &rect, const ofColor &color){
+		/* ============================================ *
+		 * Get/Set Rect                                 *
+		 * ============================================ */
+		ofRectangle& Rect(void){ return rect; }
+		ofRectangle& Rect(const ofRectangle& rect){
 			this -> rect = rect;
-			this -> clr  = color;
+			return this -> rect;
 		}
 
-		bool isDraw(void){ return draw; }
-		bool isDraw(bool draw){ return this -> draw = draw; }
+		/* ============================================ *
+		 * Get OscMessage                               *
+		 * ============================================ */
+		void Osc(const ofxOscMessage& m){}
 
-		const ofColor& Color(void){ return clr; }
-		const ofColor& Color(const ofColor& color){
-			clr = color;
-			return clr;
-		}
-
+		/* ============================================ *
+		 * Draw                                         *
+		 * ============================================ */
 		void Draw(void){
-			if(draw){
-				ofPushStyle();
-					ofSetColor(clr);
-					ofRect(rect);
-				ofPopStyle();
-				draw = false;
-			}
+
+			ofPushStyle();
+			ofPushMatrix();
+	
+				ofSetColor( Color().Current() );
+				ofRect(rect);
+	
+				ofTranslate(    Pos().Current() );
+				ofRotateX  ( Rotate().Current().x );
+				ofRotateY  ( Rotate().Current().y );
+				ofRotateZ  ( Rotate().Current().z );
+				ofScale(
+						Scale().Current().x
+					, Scale().Current().y
+					, Scale().Current().z
+				);
+	
+			ofPopMatrix();
+			ofPopStyle();
 		}
+
+		/* ============================================ *
+		 * AudioIn                                      *
+		 * ============================================ */
+		virtual void AudioIn(
+				const float *raw
+			, int          size
+			, bool         lowattack
+			, bool         highattack
+		){
+			Opacity(
+					lowattack ? 255 : Opacity().Current()
+				, Opacity().Target()
+				, Opacity().Resist()
+			);
+		}
+
 };
 
 #endif /* defined(__basic__PlaneDraw__) */

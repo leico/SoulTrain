@@ -11,6 +11,8 @@
 #include "PlaneDraw.h"
 #include "AttackDetection.h"
 
+#include "Change.h"
+
 /* 波形クラス化、音によるフェードつける。 */
 
 class ofApp : public ofxiOSApp{
