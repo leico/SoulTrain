@@ -89,21 +89,17 @@ class HPF : public Filter{
 		if(m.getAddress() == "/HPF/Frequency/x"){
 			Frequency( m.getArgAsFloat(0) * 100 );
 			Setup(AttackThreshold());
-			ofLogVerbose() << Frequency();
 			return;
 		}
 
 		if(m.getAddress() == "/HPF/Q/x"){
 			Q( m.getArgAsFloat(0) );
 			Setup(AttackThreshold());
-			ofLogVerbose() << Q();
 			return;
 		}
 
 		if(m.getAddress() == "/HPF/Threshold/x"){
 			AttackThreshold( m.getArgAsFloat(0) );
-
-			ofLogVerbose() << AttackThreshold();
 			return;
 		}
 	}

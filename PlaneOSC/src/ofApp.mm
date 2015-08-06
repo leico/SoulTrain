@@ -17,7 +17,7 @@ void ofApp::setup(){
 	blur.Setup(16);
 
 	plane.Rect   ( ofRectangle(0, 0, width, height) );
-	plane.Color  ( Change<ofColor>(ofColor(255, 0), ofColor(255, 0), 0.1) );
+	plane.Color  ( Change<ofColor>(ofColor(0, 0), ofColor(0, 0), 0.1) );
 
 	wave.Color  ( Change<ofColor>(ofColor(255, 0), ofColor(255, 0), 0.1) );
 	wave.Scale ().Resist(0.05);
@@ -64,6 +64,7 @@ void ofApp::update(){
 		lpf .Osc(m);
 		hpf .Osc(m);
 		blur.Osc(m);
+		plane.Osc(m);
 	}
 
 	plane.Update();

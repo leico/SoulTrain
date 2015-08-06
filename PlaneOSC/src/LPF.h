@@ -90,23 +90,17 @@ class LPF : public Filter{
 		if(m.getAddress() == "/LPF/Frequency/x"){
 			Frequency( m.getArgAsFloat(0) * 100 );
 			Setup(AttackThreshold());
-
-			ofLogVerbose() << Frequency();
 			return;
 		}
 
 		if(m.getAddress() == "/LPF/Q/x"){
 			Q( m.getArgAsFloat(0) );
 			Setup(AttackThreshold());
-
-			ofLogVerbose() << Q();
 			return;
 		}
 
 		if(m.getAddress() == "/LPF/Threshold/x"){
 			AttackThreshold( m.getArgAsFloat(0) );
-
-			ofLogVerbose() << AttackThreshold();
 			return;
 		}
 	}

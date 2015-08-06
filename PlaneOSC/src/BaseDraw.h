@@ -29,6 +29,8 @@ class BaseDraw{
 
 		Change<ofColor> color;
 
+		bool blur;
+
 	public:
 		/* ======================================= *
 		 * Constructor/Destructor                  *
@@ -181,6 +183,16 @@ class BaseDraw{
 		Change<ofColor>& CurrentColor(const ofColor& current, const float resist){
 			return Color( Change<ofColor>(current, Color().Target(), resist) );
 		}
+
+		/* ======================================= *
+		 * get/set Blurflag                        *
+		 * ======================================= */
+		bool Blur(void){ return blur; }
+		bool Blur(const bool blur){
+			this -> blur = blur;
+			return this -> blur;
+		}
+
 
 		/* ======================================= *
 		 * Update                                  *
