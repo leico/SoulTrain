@@ -7,10 +7,12 @@
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
 
-#include "BaseDraw.h"
 #include "Change.h"
+#include "BaseDraw.h"
 #include "PlaneDraw.h"
 #include "WaveDraw.h"
+#include "AccelDraw.h"
+
 #include "BlurDraw.h"
 #include "AttackDetection.h"
 
@@ -42,6 +44,8 @@ class ofApp : public ofxiOSApp{
 				
 				PlaneDraw plane;
 				WaveDraw  wave;
+				AccelDraw accel;
+				
 
 				static const int BUF_SIZE      = 512;
 				static const int SAMPLING_RATE = 44100;

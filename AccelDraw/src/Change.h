@@ -26,6 +26,12 @@ class Change{
 		 Change(void){};
 		~Change(void){};
 
+		 Change(const T& current, const T& target, const float resist) :
+			 current(current)
+		 , target(target)
+		 , resist(resist)
+		 {}
+		
 		/* ============================================ *
 		 * Copy Constructor                             *
 		 * ============================================ */

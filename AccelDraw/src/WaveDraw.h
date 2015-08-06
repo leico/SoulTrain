@@ -21,38 +21,46 @@ class WaveDraw : public BaseDraw{
 		ofMesh   signalwave;
 		std :: vector<ofPoint> vertices;
 
-		ofPoint base;
 		float   amplitude;
 
 		float sum;
 
 	public:
+		/* =========================================== *
+		 * Constructor/Destructor                      *
+		 * =========================================== */
 	 	 WaveDraw(){};
 		~WaveDraw(){};
 
+		/* =========================================== *
+		 * Clear                                       *
+		 * =========================================== */
 		void Clear(void){
 			signalwave.clear();
 			vertices  .clear();
 		}
 
-		int Size(void)    { return vertices.size(); }
+		/* =========================================== *
+		 * Get/Set Size                                *
+		 * =========================================== */
+		int Size(void){ return vertices.size(); }
 		int Size(const int size){
 			vertices.resize(size);
 			return vertices.size();
 		}
 
-		ofPoint& Base(void){ return base; }
-		ofPoint& Base(const ofPoint& base){
-			this -> base = base;
-			return this -> base;
-		}
-
+		/* =========================================== *
+		 * Get/Set Wave Amplitude                      *
+		 * =========================================== */
 		float Amplitude(void){ return amplitude; }
 		float Amplitude(const float amplitude){
 			this -> amplitude = amplitude;
 			return this -> amplitude;
 		}
 
+		/* =========================================== *
+		 * Get/Set DrawMode                            *
+		 * =========================================== */
 		ofPrimitiveMode Mode(void){ return signalwave.getMode(); }
 		ofPrimitiveMode Mode(ofPrimitiveMode mode){
 			signalwave.setMode(mode);
@@ -60,12 +68,12 @@ class WaveDraw : public BaseDraw{
 		}
 
 		
-		
+		/* =========================================== *
+		 * Setup                                       *
+		 * =========================================== */
+		void Setup(const int size, const float amplitude, ofPrimitiveMode mode){
 
-		void Setup(const int size, const ofPoint& base, const float amplitude, ofPrimitiveMode mode){
-			
 			Size     (size);
-			Base     (base);
 			Amplitude(amplitude);
 			Mode     (mode);
 
@@ -76,8 +84,9 @@ class WaveDraw : public BaseDraw{
 		}
 
 
-
-
+		/* =========================================== *
+		 * Update                                      *
+		 * =========================================== */
 		void Update(void){
 			BaseDraw :: Update();
 
@@ -95,25 +104,29 @@ class WaveDraw : public BaseDraw{
 			
 		}
 
-
+		/* =========================================== *
+		 * Get OscMessage                              *
+		 * =========================================== */
 		void Osc(const ofxOscMessage& m){}
 
+
+		/* =========================================== *
+		 * Draw                                        *
+		 * =========================================== */
 		void Draw(void){
 
 			ofPushStyle ();
 			ofPushMatrix();
 
-				ofTranslate( base);
-					
-				ofTranslate(    Pos().Current() );
-				ofRotateX  ( Rotate().Current().x );
-				ofRotateY  ( Rotate().Current().y );
-				ofRotateZ  ( Rotate().Current().z );
-				ofScale(
-						Scale().Current().x
-					, Scale().Current().y
-					, Scale().Current().z
-				);
+				ofPoint pos    = BasePos()   .Current() + Pos()   .Current();
+				ofPoint rotate = BaseRotate().Current() + Rotate().Current();
+				ofPoint scale  = BaseScale() .Current() * Scale() .Current();
+
+				ofTranslate( pos );
+				ofRotateX  ( rotate.x );
+				ofRotateY  ( rotate.y );
+				ofRotateZ  ( rotate.z );
+				ofScale    (scale.x, scale.y, scale.z);
 
 				ofSetColor( Color().Current() );
 				signalwave.draw();
@@ -122,7 +135,9 @@ class WaveDraw : public BaseDraw{
 			ofPopStyle ();
 		}
 
-
+		/* =========================================== *
+		 * AudioIn                                     *
+		 * =========================================== */
 		void AudioIn(
 				const float *raw
 			, int          size
@@ -151,11 +166,7 @@ class WaveDraw : public BaseDraw{
 						, ofRandom(-300, 300)
 					)
 				);
-
-
 		}
-		
-	
 };
 
 #endif

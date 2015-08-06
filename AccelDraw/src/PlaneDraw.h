@@ -72,11 +72,11 @@ class PlaneDraw : public BaseDraw{
 			, bool         lowattack
 			, bool         highattack
 		){
-			Opacity(
+			Opacity( Change<unsigned char>(
 					lowattack ? 255 : Opacity().Current()
 				, Opacity().Target()
 				, Opacity().Resist()
-			);
+			) );
 		}
 
 };

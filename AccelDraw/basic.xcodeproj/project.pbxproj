@@ -110,6 +110,7 @@
 		4A915B371B6879B6003FACB5 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		4A915B381B6879B6003FACB5 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
 		4A915B491B690BB6003FACB5 /* WaveDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaveDraw.h; sourceTree = "<group>"; };
+		4AAFCEDF1B6AA6DE00156D7B /* AccelDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccelDraw.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		678E130717951530005B6D19 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "bin/data/Icon@2x.png"; sourceTree = "<group>"; };
@@ -373,6 +374,7 @@
 				4A915AF81B67DC6C003FACB5 /* BlurDraw.h */,
 				4A915AFE1B67E2BF003FACB5 /* PlaneDraw.h */,
 				4A915B091B685BAA003FACB5 /* BaseDraw.h */,
+				4AAFCEDF1B6AA6DE00156D7B /* AccelDraw.h */,
 				4A915B491B690BB6003FACB5 /* WaveDraw.h */,
 				4A915B0C1B685C94003FACB5 /* Change.h */,
 			);

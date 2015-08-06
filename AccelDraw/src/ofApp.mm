@@ -15,17 +15,31 @@ void ofApp::setup(){
 	blur.Setup(16);
 
 	plane.Rect   ( ofRectangle(0, 0, width, height) );
-	plane.Color  ( ofColor(255), ofColor(255), 0    );
-	plane.Opacity(0, 0, 0.05);
+	plane.Color  ( Change<ofColor>(ofColor(255), ofColor(255), 0) );
+	plane.Opacity( Change<unsigned char>(0, 0, 0.05) );
 
-	wave.Color  ( ofColor(255), ofColor(255), 0.1 );
-	wave.Opacity(0, 0, 0.05);
+	wave.Color  ( Change<ofColor>(ofColor(255), ofColor(255), 0.1) );
+	wave.Opacity( Change<unsigned char>(0, 0, 0.05) );
 
-	wave.Scale ( wave.Scale ().Current(), wave.Scale ().Target(), 0.05);
-	wave.Rotate( wave.Rotate().Current(), wave.Rotate().Target(), 0.05);
-	wave.Pos   ( wave.Pos   ().Current(), wave.Pos   ().Target(), 0.05);
+	wave.Scale  ( Change<ofPoint>(wave.Scale ().Current(), wave.Scale ().Target(), 0.05) );
+	wave.Rotate ( Change<ofPoint>(wave.Rotate().Current(), wave.Rotate().Target(), 0.05) );
+	wave.Pos    ( Change<ofPoint>(wave.Pos   ().Current(), wave.Pos   ().Target(), 0.05) );
+	wave.BasePos( Change<ofPoint>(ofPoint(0, height / 2, 0), ofPoint(0, height / 2, 0), 0) );
 
-	wave.Setup  (width, ofPoint(0, height / 2, 0), 300, OF_PRIMITIVE_LINE_STRIP);
+	wave.Setup(width, 300, OF_PRIMITIVE_LINE_STRIP);
+
+	accel.Color  ( Change<ofColor>(ofColor(255), ofColor(255), 0.1) );
+	accel.Opacity( Change<unsigned char>(255, 0, 0.00000001) );
+
+	accel.Scale  ( Change<ofPoint>(accel.Scale().Current(), accel.Scale().Target(), 0.05) );
+	accel.Rotate ( Change<ofPoint>(accel.Rotate().Current(), accel.Rotate().Target(), 0.05) );
+	accel.BasePos( Change<ofPoint>(
+			ofPoint(width / 2, height / 2, 0)
+		, ofPoint(width / 2, height / 2, 0)
+		, 0
+	) );
+	
+	accel.Setup(600, 300, OF_PRIMITIVE_LINE_STRIP);
 
 	ofSoundStreamSetup(0, 1, SAMPLING_RATE, BUF_SIZE, 1);
 
@@ -48,6 +62,7 @@ void ofApp::update(){
 
 	plane.Update();
 	wave .Update();
+	accel.Update();
 
 }
 
@@ -56,6 +71,7 @@ void ofApp::draw(){
 
 	blur.Begin();
 		wave.Draw();
+		accel.Draw();
 	blur.End();
 	blur.Draw(0, 0);
 	
@@ -121,5 +137,6 @@ void ofApp::audioIn(float *input, int buffersize, int n_channel){
 
 	plane.AudioIn(input, buffersize, lowattack, highattack);
 	wave .AudioIn(input, buffersize, lowattack, highattack);
+	accel.AudioIn(input, buffersize, lowattack, highattack);
 
 }
