@@ -6,9 +6,12 @@ void ofApp::setup(){
 	ofBackground(0, 0, 0);
 	ofSetFrameRate(60);
 	ofEnableAlphaBlending();
-
+/*
 	blur .allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 	front = blur;
+*/
+
+	blurdraw.setup(ofGetWidth(), ofGetHeight(), 200);
 
 }
 
@@ -23,17 +26,16 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
+
+int clr = 0;
 void ofApp::draw(){
 
-	front.begin();
-	ofSetColor(230, 230);
-	blur.draw(0, 0);
-		
+	blurdraw.begin();
 	ofSetColor(255,255,255,255);
 	ofCircle(pos, 30);
-	front.end();
-    blur = front;
-	front.draw(0, 0);
+
+	blurdraw.end();
+	blurdraw.draw(0, 0);
 
 
 }
