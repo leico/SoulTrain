@@ -36,11 +36,14 @@ class ofApp : public ofxiOSApp{
 				ofMesh highwave;
 
 				ofPoint vertices[BUF_SIZE];
-				ofPoint low[BUF_SIZE];
+				ofPoint low [BUF_SIZE];
 				ofPoint high[BUF_SIZE];
 
 				BiQuadFilter lowpass;
 				BiQuadFilter highpass;
+
+				unsigned char o_low;
+				unsigned char o_high;
 
 };
 
