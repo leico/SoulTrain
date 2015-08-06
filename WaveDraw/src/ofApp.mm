@@ -5,36 +5,29 @@ void ofApp::setup(){
 
 
 	ofSetLogLevel(OF_LOG_VERBOSE);
+	ofEnableAlphaBlending();
 	ofSetVerticalSync(true);
 	ofBackground(0);
 
 	width  = ofGetWidth ();
 	height = ofGetHeight();
 
-
-	vertices = new ofPoint[width];
-
-
 	blur.Setup(16);
 
-	plane.Rect(
-		ofRectangle(0, 0, width, height)
-	);
-	plane.Color(
-		  ofColor(255)
-		, ofColor(255)
-		, 0
-	);
+	plane.Rect   ( ofRectangle(0, 0, width, height) );
+	plane.Color  ( ofColor(255), ofColor(255), 0    );
 	plane.Opacity(0, 0, 0.05);
 
+	wave.Color  ( ofColor(255), ofColor(255), 0.1 );
+	wave.Opacity(0, 0, 0.05);
+
+	wave.Scale ( wave.Scale ().Current(), wave.Scale ().Target(), 0.05);
+	wave.Rotate( wave.Rotate().Current(), wave.Rotate().Target(), 0.05);
+	wave.Pos   ( wave.Pos   ().Current(), wave.Pos   ().Target(), 0.05);
+
+	wave.Setup  (width, ofPoint(0, height / 2, 0), 300, OF_PRIMITIVE_LINE_STRIP);
+
 	ofSoundStreamSetup(0, 1, SAMPLING_RATE, BUF_SIZE, 1);
-
-	signalwave.setMode(OF_PRIMITIVE_LINE_STRIP);
-
-	for(int i = 0 ; i < width + 1 ; ++ i){
-		vertices[i].x = i;
-		signalwave.addColor(ofColor(255));
-	}
 
 	low .Setup<AttackDetection :: LOWPASS> (200 , 1, SAMPLING_RATE);
 	high.Setup<AttackDetection :: HIGHPASS>(8000, 1, SAMPLING_RATE);
@@ -53,14 +46,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	signalwave.clearVertices();
-	signalwave.addVertices(vertices, width);
-
-	/*
-	o_low  = (o_low  - 8 < 0) ? 0 : o_low  - 8;
-	o_high = (o_high - 8 < 0) ? 0 : o_high - 8;
-	*/
 	plane.Update();
+	wave .Update();
 
 }
 
@@ -68,27 +55,11 @@ void ofApp::update(){
 void ofApp::draw(){
 
 	blur.Begin();
-		plane.Draw();
+		wave.Draw();
 	blur.End();
 	blur.Draw(0, 0);
 	
-	signalwave.draw();
-/*
-	ofPushStyle();
-
-		if(o_low){
-			ofSetColor(255, 0, 0, o_low);
-			ofRect(0, 0, ofGetWidth(), ofGetHeight());
-		}
-
-		if(o_high){
-			ofSetColor(0, 255, 0, o_high);
-			ofRect(0, 0, ofGetWidth(), ofGetHeight());
-		}
-
-	ofPopStyle();
-*/
-
+		plane.Draw();
 	
 }
 
@@ -144,27 +115,11 @@ void ofApp::deviceOrientationChanged(int newOrientation){
 
 //--------------------------------------------------------------
 void ofApp::audioIn(float *input, int buffersize, int n_channel){
-
-	int height   = ofGetHeight();
-	int base     = height / 2;
-
-
-	float sum = 0;
-	for(int i = 0 ; i < buffersize ; ++ i)
-		sum +=  abs(input[i]);
 	
-	for(int i = 0 ; i < width - 1 ; i += 2){
-		vertices[i]    .y = vertices[i + 2]    .y;
-		vertices[i + 1].y = vertices[i + 2 + 1].y;
-	}
-
-	float tmp =  sum / buffersize * 300;
-	vertices[width - 2].y = base + tmp;
-	vertices[width - 1].y = base - tmp;
-
 	bool lowattack  = low.Process <AttackDetection :: AVERAGE> (input, buffersize);
 	bool highattack = high.Process<AttackDetection :: MAXVALUE>(input, buffersize);
 
 	plane.AudioIn(input, buffersize, lowattack, highattack);
+	wave .AudioIn(input, buffersize, lowattack, highattack);
 
 }

@@ -7,11 +7,13 @@
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
 
-#include "BlurDraw.h"
+#include "BaseDraw.h"
+#include "Change.h"
 #include "PlaneDraw.h"
+#include "WaveDraw.h"
+#include "BlurDraw.h"
 #include "AttackDetection.h"
 
-#include "Change.h"
 
 /* 波形クラス化、音によるフェードつける。 */
 
@@ -39,25 +41,19 @@ class ofApp : public ofxiOSApp{
 				BlurDraw blur;
 				
 				PlaneDraw plane;
+				WaveDraw  wave;
 
 				static const int BUF_SIZE      = 512;
 				static const int SAMPLING_RATE = 44100;
 
-				ofMesh signalwave;
-
 				int width;
 				int height;
-
-				ofPoint *vertices;
 
 				float lowthresh;
 				float highthresh;
 
 				AttackDetection low;
 				AttackDetection high;
-
-				unsigned char o_low;
-				unsigned char o_high;
 
 };
 #endif

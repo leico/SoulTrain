@@ -66,7 +66,7 @@ class PlaneDraw : public BaseDraw{
 		/* ============================================ *
 		 * AudioIn                                      *
 		 * ============================================ */
-		virtual void AudioIn(
+		void AudioIn(
 				const float *raw
 			, int          size
 			, bool         lowattack
