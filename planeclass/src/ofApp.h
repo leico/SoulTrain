@@ -6,7 +6,12 @@
 #include "ofMain.h"
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
+
+#include "BlurDraw.h"
+#include "PlaneDraw.h"
 #include "AttackDetection.h"
+
+/* 波形クラス化、音によるフェードつける。 */
 
 class ofApp : public ofxiOSApp{
 	
@@ -29,12 +34,22 @@ class ofApp : public ofxiOSApp{
 
 				void audioIn(float *input, int buffersize, int n_channel);
 
+				BlurDraw blur;
+				
+				PlaneDraw plane;
+
 				static const int BUF_SIZE      = 512;
 				static const int SAMPLING_RATE = 44100;
 
 				ofMesh signalwave;
 
-				ofPoint vertices[BUF_SIZE];
+				int width;
+				int height;
+
+				ofPoint *vertices;
+
+				float lowthresh;
+				float highthresh;
 
 				AttackDetection low;
 				AttackDetection high;

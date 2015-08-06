@@ -12,6 +12,8 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4A915AEC1B677800003FACB5 /* BiQuadFilter.h in Sources */ = {isa = PBXBuildFile; fileRef = 4A915AEA1B677800003FACB5 /* BiQuadFilter.h */; };
 		4A915AF41B67CE8E003FACB5 /* AttackDetection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A915AF31B67CE8E003FACB5 /* AttackDetection.mm */; };
+		4A915AFC1B67DC9D003FACB5 /* BlurDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A915AFB1B67DC9D003FACB5 /* BlurDraw.mm */; };
+		4A915AFF1B67E2BF003FACB5 /* PlaneDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A915AFD1B67E2BF003FACB5 /* PlaneDraw.mm */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		678E130817951530005B6D19 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130717951530005B6D19 /* Icon@2x.png */; };
@@ -60,6 +62,10 @@
 		4A915AEA1B677800003FACB5 /* BiQuadFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BiQuadFilter.h; sourceTree = "<group>"; };
 		4A915AF11B679CA6003FACB5 /* AttackDetection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttackDetection.h; sourceTree = "<group>"; };
 		4A915AF31B67CE8E003FACB5 /* AttackDetection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AttackDetection.mm; sourceTree = "<group>"; };
+		4A915AF81B67DC6C003FACB5 /* BlurDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurDraw.h; sourceTree = "<group>"; };
+		4A915AFB1B67DC9D003FACB5 /* BlurDraw.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlurDraw.mm; sourceTree = "<group>"; };
+		4A915AFD1B67E2BF003FACB5 /* PlaneDraw.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlaneDraw.mm; sourceTree = "<group>"; };
+		4A915AFE1B67E2BF003FACB5 /* PlaneDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneDraw.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		678E130717951530005B6D19 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "bin/data/Icon@2x.png"; sourceTree = "<group>"; };
@@ -203,6 +209,10 @@
 				4A915AEA1B677800003FACB5 /* BiQuadFilter.h */,
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* ofApp.mm */,
+				4A915AF81B67DC6C003FACB5 /* BlurDraw.h */,
+				4A915AFD1B67E2BF003FACB5 /* PlaneDraw.mm */,
+				4A915AFE1B67E2BF003FACB5 /* PlaneDraw.h */,
+				4A915AFB1B67DC9D003FACB5 /* BlurDraw.mm */,
 				4A915AF11B679CA6003FACB5 /* AttackDetection.h */,
 				4A915AF31B67CE8E003FACB5 /* AttackDetection.mm */,
 				E4D8936C11527B74007E1F53 /* ofApp.h */,
@@ -315,6 +325,8 @@
 			files = (
 				4A915AEC1B677800003FACB5 /* BiQuadFilter.h in Sources */,
 				E4D8936E11527B74007E1F53 /* main.mm in Sources */,
+				4A915AFF1B67E2BF003FACB5 /* PlaneDraw.mm in Sources */,
+				4A915AFC1B67DC9D003FACB5 /* BlurDraw.mm in Sources */,
 				E4D8936F11527B74007E1F53 /* ofApp.mm in Sources */,
 				4A915AF41B67CE8E003FACB5 /* AttackDetection.mm in Sources */,
 			);
