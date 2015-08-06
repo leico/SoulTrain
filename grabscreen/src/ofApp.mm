@@ -4,35 +4,35 @@
 void ofApp::setup(){
 
 	ofBackground(0, 0, 0);
-
 	ofSetFrameRate(60);
-
 	ofEnableAlphaBlending();
+
+	blur.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR_ALPHA);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	for(int i = bnum - 1 ; i >= 0 ; -- i){
-		pos[i] = pos[i - 1];
-	}
 
 	rad += 0.01;
-	pos[0].x = ofGetWidth()  / 2 + 100 * sin(rad * 5);
-	pos[0].y = ofGetHeight() / 2 + 100 * cos(rad * 6);
+	pos.x = ofGetWidth()  / 2 + 100 * sin(rad * 5);
+	pos.y = ofGetHeight() / 2 + 100 * cos(rad * 6);
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+	ofSetColor(255, 255, 255, 128);
+	blur.draw(0, 0);
+		
+	ofSetColor(255,255,255,255);
+	ofCircle(pos, 30);
 
-	for(int i = 0 ; i < bnum ; ++ i){
-		ofSetColor(255, 255, 255, 255 * (1.0 - (1.0 * i / bnum)));
-		ofCircle(pos[i], 30);
-	}
 
-	
+	blur.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+
+
 }
 
 //--------------------------------------------------------------

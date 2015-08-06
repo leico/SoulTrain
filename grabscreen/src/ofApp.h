@@ -24,10 +24,9 @@ class ofApp : public ofxiOSApp{
         void deviceOrientationChanged(int newOrientation);
 
 				double rad;
+				ofPoint pos;
 
-				const static int bnum = 60;
-
-				ofPoint pos[bnum];
+				ofImage blur;
 
 };
 
