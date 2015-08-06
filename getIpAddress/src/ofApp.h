@@ -1,23 +1,9 @@
-
-
-#ifndef __basic_OF_APP_H__
-#define __basic_OF_APP_H__
+#pragma once
 
 #include "ofMain.h"
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
-
-#include "Change.h"
-#include "BaseDraw.h"
-#include "PlaneDraw.h"
-#include "WaveDraw.h"
-#include "AccelDraw.h"
-
-#include "BlurDraw.h"
-#include "AttackDetection.h"
-
-
-/* 波形クラス化、音によるフェードつける。 */
+#include "LocalAddressGrabber.h"
 
 class ofApp : public ofxiOSApp{
 	
@@ -38,27 +24,6 @@ class ofApp : public ofxiOSApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
 
-				void audioIn(float *input, int buffersize, int n_channel);
-
-				BlurDraw blur;
-				
-				PlaneDraw plane;
-				WaveDraw  wave;
-				AccelDraw accel;
-				
-
-				static const int BUF_SIZE      = 512;
-				static const int SAMPLING_RATE = 44100;
-
-				int width;
-				int height;
-
-				float lowthresh;
-				float highthresh;
-
-				AttackDetection low;
-				AttackDetection high;
-
 };
-#endif
+
 

@@ -5,6 +5,7 @@ int main(){
 	ofAppiOSWindow *window = new ofAppiOSWindow();
 
 	window -> enableDepthBuffer ();
+	window -> enableAntiAliasing(4);
 	
 	if( window -> isRetinaSupportedOnDevice() )
 		window -> enableRetina();
