@@ -29,14 +29,15 @@ class ofApp : public ofxiOSApp{
 				const static int h = 100;
 				const static int num = w * h;
 
+				ofFbo fbo;
+
 				ofVbo        vbo;
 				ofVec3f      verts  [num];
 				ofFloatColor vertclr[num];
 
 				ofxOscReceiver receiver;
-				ofCamera cam;
 
-				float pan, tilt, roll;
+				float pan, tilt, roll, scale;
 
 
 };

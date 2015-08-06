@@ -6,16 +6,10 @@ void ofApp::setup(){
 	receiver.setup(8000);
 
 	ofSetLogLevel(OF_LOG_VERBOSE);
-    ofSetFrameRate(60);
-
 
 	ofBackground(0);
-    ofEnableAlphaBlending();
+  ofEnableAlphaBlending();
 	ofEnableDepthTest();
-
-	cam.setPosition(0, 0, -300);
-	cam.lookAt( ofVec3f(0, 0, 0) );
-	cam.setFov( 45 );
 
 	for(int i = 0 ; i < w ; ++ i){
 		for(int j = 0 ; j < h ; ++ j){
@@ -26,6 +20,8 @@ void ofApp::setup(){
 
 	vbo.setVertexData(verts, num, GL_DYNAMIC_DRAW);
 	vbo.setColorData (vertclr, num, GL_DYNAMIC_DRAW);
+
+	fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 }
 
 //--------------------------------------------------------------
@@ -49,7 +45,7 @@ void ofApp::update(){
 			continue;
 		}
 		if(m.getAddress() == "/Cam/Zoom/x"){
-			cam.setPosition(0, 0, -300 + (-0.5 + m.getArgAsFloat(0)) * 600);
+			scale = m.getArgAsFloat(0) * 100;
 		}
 	}
 
@@ -67,22 +63,32 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
+int y = 0;
 void ofApp::draw(){
+
+	y ++;
     
 
-	ofSetHexColor(0xffffff);
-	cam.begin();
-		ofPushMatrix();
-			ofRotateX(tilt);
-			ofRotateY(roll);
-			ofRotateZ(pan);
+	fbo.begin();
+        ofClear(0, 0, 0, 0.5);
+        ofPushMatrix();
+            ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2);
+            ofRotateX(tilt);
+            ofRotateY(roll);
+            ofRotateZ(pan);
+            ofScale(scale, scale, scale);
+	
+            vbo.draw(GL_LINES, 0, num);
 
-			glPointSize(2.0);
-			vbo.draw(GL_LINES, 0, num);
-		
-		ofPopMatrix();
+            ofSetColor(255);
+    
+        ofPopMatrix();
+	fbo.end();
 
-	cam.end();
+	ofSetColor(255, 255, 255);
+
+	fbo.draw(0, 0);
+
 
 	string info  = "Vertex num = " + ofToString(w * h, 0) + "\n";
 	       info += "FPS = " + ofToString( ofGetFrameRate(), 2);
