@@ -54,3 +54,8 @@ void BlurDraw :: draw(int x, int y){
 	_front.draw(x, y);
 }
 
+
+ofFbo& BlurDraw :: getFbo(void){
+	return _front;
+}
+

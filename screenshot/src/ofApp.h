@@ -31,11 +31,7 @@ class ofApp : public ofxiOSApp{
 
 				BlurDraw blurdraw;
 
-				/*
-				
-				ofFbo blur;
-				ofFbo front;
-				*/
+				ofImage image;
 
 };
 

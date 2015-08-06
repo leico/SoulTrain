@@ -38,6 +38,7 @@ void ofApp::draw(){
 	blurdraw.draw(0, 0);
 
 
+
 }
 
 //--------------------------------------------------------------
@@ -57,6 +58,10 @@ void ofApp::touchMoved(ofTouchEventArgs & touch){
 
 //--------------------------------------------------------------
 void ofApp::touchUp(ofTouchEventArgs & touch){
+    
+    image.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+    image.saveImage(ofxiOSGetDocumentsDirectory() + "image.png");
+
 
 }
 

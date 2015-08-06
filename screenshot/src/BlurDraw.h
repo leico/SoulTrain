@@ -32,14 +32,11 @@ class BlurDraw{
 	int Opacity(int opacity);
 
 	void begin(void);
-
-	void bdraw(void){
-		_back.draw(0, 0);
-	}
 	void end  (void);
 
 	void draw(int x, int y);
 
+	ofFbo& getFbo(void);
 };
 
 
