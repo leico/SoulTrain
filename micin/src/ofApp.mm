@@ -1,99 +1,49 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup(){	
 
-	ofBackground(0, 0, 0);
-	ofSetFrameRate(60);
-	ofEnableAlphaBlending();
 
-	ofxAccelerometer.setup();
+	ofBackground(0);
 
-	blur.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
+	ofSoundStreamSetup(0, 1, SAMPLING_RATE, BUF_SIZE, 1);
 
-	base.set(0);
+	signalwave.setMode(OF_PRIMITIVE_LINE_STRIP);
+	lowwave   .setMode(OF_PRIMITIVE_LINE_STRIP);
+	highwave  .setMode(OF_PRIMITIVE_LINE_STRIP);
 
-	for(int i = 0 ; i < NUM_POS ; ++ i){
-		pos [i].set(0.0f);
-		ppos[i] = &pos[i];
+	{
+		int width = ofGetWidth();
+		for(int i = 0 ; i < BUF_SIZE ; ++ i){
+			signalwave.addColor(ofColor(255));
+			low[i].x = high[i].x = vertices[i].x = i * width / BUF_SIZE;
+		}
 	}
 
-	mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-	for(int i = 0 ; i < NUM_POS ; ++ i)
-		mesh.addColor(ofColor(255));
+	lowpass  .LowPass ( 200, 1.0, SAMPLING_RATE);
+	highpass .HighPass(5000, 1.0, SAMPLING_RATE);
 
-	rad = 0.0;
-
-	time = ofGetSeconds();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	rad += 0.5;
-
-	force = ofxAccelerometer.getForce();
-
-	mesh.clearVertices();
-
-	ofPoint tmp = pos[0];
-	for(int i = 0 ; i < NUM_POS - 1 ; ++ i)
-		pos[i] = pos[i + 1];
-	pos[NUM_POS - 1] = (base - ofxAccelerometer.getForce()) * 400;
-
-	mesh.addVertices(pos, NUM_POS);
+	signalwave.clearVertices();
+	lowwave   .clearVertices();
+	highwave  .clearVertices();
+	signalwave.addVertices(vertices, BUF_SIZE);
+	lowwave   .addVertices(low,      BUF_SIZE);
+	highwave  .addVertices(high,     BUF_SIZE);
 
 }
 
 //--------------------------------------------------------------
-
-/* ================================================= *
- *	 アンチエイリアス入れるとios版は全般的にバグる。 *
- * ================================================= */
-
-
 void ofApp::draw(){
-
-	blur.begin();
-		ofPushMatrix();
-
-			ofSetColor(0, 16);
-			ofRect(0, 0, ofGetWidth(), ofGetHeight());
-
-			ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2);
-			ofRotateY(rad);
-
-			ofSetColor(255);
-			mesh.draw();
-
-			ofSetColor(255, 0, 0);
-			ofEllipse(pos[NUM_POS - 1], 10, 10);
-
-		ofPopMatrix();
-
-	blur.end();
-
-	blur.draw(0, 0);
-
-	string info  = "X = " + ofToString(force.x) + "\n";
-	       info += "Y = " + ofToString(force.y) + "\n";
-				 info += "Z = " + ofToString(force.z) + "\n";
-				 
-	ofDrawBitmapString(info, 30, 30);
-
-	int now = ofGetSeconds();
-
-	if(time != ofGetSeconds()){
-		string filename  =  ofToString(ofGetHours(),    2, '0');
-			     filename +=  ofToString(ofGetMinutes(),  2, '0');
-					 filename +=  ofToString(ofGetSeconds(),  2, '0');
-										 
-		image.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-		image.saveImage(ofxiOSGetDocumentsDirectory() + filename + ".png");
-		time = now;
-	}
-
-
+	
+	signalwave.draw();
+	lowwave.draw();
+	highwave.draw();
+	
 }
 
 //--------------------------------------------------------------
@@ -119,7 +69,6 @@ void ofApp::touchUp(ofTouchEventArgs & touch){
 //--------------------------------------------------------------
 void ofApp::touchDoubleTap(ofTouchEventArgs & touch){
 
-	base = ofxAccelerometer.getForce();
 }
 
 //--------------------------------------------------------------
@@ -147,3 +96,18 @@ void ofApp::deviceOrientationChanged(int newOrientation){
 
 }
 
+//--------------------------------------------------------------
+void ofApp::audioIn(float *input, int buffersize, int n_channel){
+
+	int height   = ofGetHeight();
+	int base     = height / 2;
+	int lowbase  = base + height / 4;
+	int highbase = base - height / 4;
+
+	for(int i = 0 ; i < buffersize ; ++ i){
+		vertices[i].y = base     + input[i] * 300;
+		low     [i].y = lowbase  + lowpass .Process(input[i]) * 500;
+		high    [i].y = highbase + highpass.Process(input[i]) * 500;
+	}
+
+}

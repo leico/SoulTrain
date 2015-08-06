@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
+#include "BiQuadFilter.h"
 
 class ofApp : public ofxiOSApp{
 	
@@ -23,24 +24,23 @@ class ofApp : public ofxiOSApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
 
-				double rad;
+				void audioIn(float *input, int buffersize, int n_channel);
 
-				static const int NUM_POS = 2000;
+				static const int BUF_SIZE      = 512;
+				static const int SAMPLING_RATE = 44100;
 
-				ofImage image;
+				float buffer[BUF_SIZE];
 
-				ofFbo blur;
+				ofMesh signalwave;
+				ofMesh lowwave;
+				ofMesh highwave;
 
-				ofPoint base;
-				
-				ofPoint   pos[NUM_POS];
-				ofPoint *ppos[NUM_POS];
+				ofPoint vertices[BUF_SIZE];
+				ofPoint low[BUF_SIZE];
+				ofPoint high[BUF_SIZE];
 
-				ofMesh mesh;
-
-				ofPoint force;
-
-				int time;
+				BiQuadFilter lowpass;
+				BiQuadFilter highpass;
 
 };
 
