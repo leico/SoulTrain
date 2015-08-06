@@ -4,8 +4,6 @@
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
 
-#include "BlurDraw.h"
-
 class ofApp : public ofxiOSApp{
 	
     public:
@@ -27,11 +25,22 @@ class ofApp : public ofxiOSApp{
 
 				double rad;
 
-				ofPoint pos;
-
-				BlurDraw blurdraw;
+				static const int NUM_POS = 2000;
 
 				ofImage image;
+
+				ofFbo blur;
+
+				ofPoint base;
+				
+				ofPoint   pos[NUM_POS];
+				ofPoint *ppos[NUM_POS];
+
+				ofMesh mesh;
+
+				ofPoint force;
+
+				int time;
 
 };
 
