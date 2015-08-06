@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
+#include "ofxOsc.h"
 
 class ofApp : public ofxiOSApp{
 	
@@ -23,11 +24,16 @@ class ofApp : public ofxiOSApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
 
-				ofEasyCam cam;
+
+				ofxOscReceiver receiver;
+
+				ofCamera cam;
 
 				ofMesh mesh;
 
 				int w, h;
+
+				float pan, tilt, roll;
 
 
 };

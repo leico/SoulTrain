@@ -3,9 +3,18 @@
 //--------------------------------------------------------------
 void ofApp::setup(){	
 
+	receiver.setup(8000);
+
+	ofSetLogLevel(OF_LOG_VERBOSE);
+
+
 	ofBackground(0);
+    ofEnableAlphaBlending();
 	ofEnableDepthTest();
-	cam.setDistance(100);
+
+	cam.setPosition(0, 0, -300);
+	cam.lookAt( ofVec3f(0, 0, 0) );
+	cam.setFov( 45 );
 
 	w = 100;
 	h = 100;
@@ -17,6 +26,30 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+
+	while( receiver.hasWaitingMessages() ){
+
+		ofxOscMessage m;
+		receiver.getNextMessage(&m);
+
+		if(m.getAddress() == "/Cam/x/x"){
+			tilt = 360 * m.getArgAsFloat(0);
+			continue;
+		}
+		if(m.getAddress() == "/Cam/y/x"){
+			roll = 360 * m.getArgAsFloat(0);
+			continue;
+		}
+		if(m.getAddress() == "/Cam/z/x"){
+			pan = 360 * m.getArgAsFloat(0);
+			continue;
+		}
+		if(m.getAddress() == "/Cam/Zoom/x"){
+			cam.setPosition(0, 0, -300 + (-0.5 + m.getArgAsFloat(0)) * 600);
+		}
+	}
+
+
 
 	mesh.clearVertices();
 
@@ -32,14 +65,22 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
+//    ofSetColor(0, 0, 0, 128);
+//    ofRect(0, 0, ofGetWidth(), ofGetHeight());
 
 	ofSetHexColor(0xffffff);
 	cam.begin();
+		ofPushMatrix();
+			ofRotateX(tilt);
+			ofRotateY(roll);
+			ofRotateZ(pan);
 
-		glPointSize(2.0);
-		glEnable(GL_POINTS);
+			glPointSize(2.0);
+			glEnable(GL_POINTS);
 		
-		mesh.drawVertices();
+			mesh.drawVertices();
+		ofPopMatrix();
 
 	cam.end();
 
