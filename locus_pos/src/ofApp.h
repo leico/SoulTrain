@@ -23,11 +23,11 @@ class ofApp : public ofxiOSApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
 
-				float posX, posY;
+				double rad;
 
-				bool touched;
+				const static int bnum = 60;
 
-				ofFbo fbo;
+				ofPoint pos[bnum];
 
 };
 

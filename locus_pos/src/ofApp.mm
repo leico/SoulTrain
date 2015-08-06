@@ -3,43 +3,35 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-	touched = false;
+	ofBackground(0, 0, 0);
 
-	ofSetColor(255,255,255);
+	ofSetFrameRate(60);
 
 	ofEnableAlphaBlending();
-
-	fbo.allocate(ofGetWidth(), ofGetHeight(), true);
-
-	ofBackground(0);
-
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+
+	for(int i = bnum - 1 ; i >= 0 ; -- i){
+		pos[i] = pos[i - 1];
+	}
+
+	rad += 0.01;
+	pos[0].x = ofGetWidth()  / 2 + 100 * sin(rad * 5);
+	pos[0].y = ofGetHeight() / 2 + 100 * cos(rad * 6);
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	fbo.begin();
 
-    glEnable(GL_BLEND);
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
-
-	ofSetColor(0, 0, 0, 128);
-	ofRect(0, 0, ofGetWidth(), ofGetHeight());
-
-	ofSetColor(255, 255, 255);
-	if(touched){
-		ofLine(posX,    0,         posX, ofGetHeight());
-		ofLine(0   , posY, ofGetWidth(),          posY);
+	for(int i = 0 ; i < bnum ; ++ i){
+		ofSetColor(255, 255, 255, 255 * (1.0 - (1.0 * i / bnum)));
+		ofCircle(pos[i], 30);
 	}
-    glDisable(GL_BLEND);
-	fbo.end();
 
-	fbo.draw(0, 0);
 	
 }
 
@@ -51,26 +43,15 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 void ofApp::touchDown(ofTouchEventArgs & touch){
 
-	touched = true;
-
-	posX = touch.x;
-	posY = touch.y;
-
 }
 
 //--------------------------------------------------------------
 void ofApp::touchMoved(ofTouchEventArgs & touch){
 
-	posX = touch.x;
-	posY = touch.y;
-
 }
 
 //--------------------------------------------------------------
 void ofApp::touchUp(ofTouchEventArgs & touch){
-
-	
-	touched = false;
 
 }
 
