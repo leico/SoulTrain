@@ -101,6 +101,9 @@ class WaveDraw : public BaseDraw{
 			for(int i = 0 ; i < Size() - 1 ; i += 2){
 				vertices[i    ].y = vertices[i + 2    ].y;
 				vertices[i + 1].y = vertices[i + 2 + 1].y;
+
+				colors[i    ] = colors[i + 2    ];
+				colors[i + 1] = colors[i + 2 + 1];
 			}
 			
 			float tmp = sum / Size() * Amplitude();
@@ -110,10 +113,7 @@ class WaveDraw : public BaseDraw{
 			signalwave.clearVertices();
 			signalwave.addVertices(vertices);
 
-			for(int i = 0 ; i < Size() + 1 ; ++ i){
-				colors[i] = colors[i + 1];
-			}
-			colors[Size() - 1] = Color().Target();
+			colors[Size() - 2] = colors[Size() - 1] = Color().Current();
 			
 			signalwave.clearColors();
 			signalwave.addColors(colors);

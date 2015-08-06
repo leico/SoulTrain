@@ -67,6 +67,7 @@ void ofApp::update(){
 		blur.Osc(m);
 		plane.Osc(m);
 		wave.Osc(m);
+		accel.Osc(m);
 	}
 
 	plane.Update();
