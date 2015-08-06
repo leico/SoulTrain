@@ -25,13 +25,16 @@ class ofApp : public ofxiOSApp{
         void deviceOrientationChanged(int newOrientation);
 
 
+				const static int w = 100;
+				const static int h = 100;
+				const static int num = w * h;
+
+				ofVbo        vbo;
+				ofVec3f      verts  [num];
+				ofFloatColor vertclr[num];
+
 				ofxOscReceiver receiver;
-
 				ofCamera cam;
-
-				ofMesh mesh;
-
-				int w, h;
 
 				float pan, tilt, roll;
 

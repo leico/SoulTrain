@@ -6,6 +6,7 @@ void ofApp::setup(){
 	receiver.setup(8000);
 
 	ofSetLogLevel(OF_LOG_VERBOSE);
+    ofSetFrameRate(60);
 
 
 	ofBackground(0);
@@ -16,12 +17,15 @@ void ofApp::setup(){
 	cam.lookAt( ofVec3f(0, 0, 0) );
 	cam.setFov( 45 );
 
-	w = 100;
-	h = 100;
+	for(int i = 0 ; i < w ; ++ i){
+		for(int j = 0 ; j < h ; ++ j){
+			verts  [j * w + i].set(i - w / 2, j - h / 2, 0 );
+			vertclr[j * w + i].set(0.5, 0.8, 1.0, 1.0);
+		}
+	}
 
-	for(int i = 0 ; i < w ; ++ i)
-		for(int j = 0 ; j < h ; ++ j)
-			mesh.addColor( ofFloatColor(0.5, 0.8, 1.0) );
+	vbo.setVertexData(verts, num, GL_DYNAMIC_DRAW);
+	vbo.setColorData (vertclr, num, GL_DYNAMIC_DRAW);
 }
 
 //--------------------------------------------------------------
@@ -50,24 +54,21 @@ void ofApp::update(){
 	}
 
 
-
-	mesh.clearVertices();
-
 	for(int i = 0 ; i < w ; ++ i){
 		for(int j = 0 ; j < h ; ++ j){
 			float x = sin( i * 0.1   + ofGetElapsedTimef() ) * 10.0;
 			float y = sin( j * 0.15  + ofGetElapsedTimef() ) * 10.0;
-            float z = x + y;
-			mesh.addVertex( ofVec3f(i - w/2, j - h/2, z) );
+      float z = x + y;
+			verts[ j * w + i] = ofVec3f(i - w / 2, j - h / 2, z);
 		}
 	}
+
+	vbo.updateVertexData(verts, num);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-//    ofSetColor(0, 0, 0, 128);
-//    ofRect(0, 0, ofGetWidth(), ofGetHeight());
 
 	ofSetHexColor(0xffffff);
 	cam.begin();
@@ -77,9 +78,8 @@ void ofApp::draw(){
 			ofRotateZ(pan);
 
 			glPointSize(2.0);
-			glEnable(GL_POINTS);
+			vbo.draw(GL_LINES, 0, num);
 		
-			mesh.drawVertices();
 		ofPopMatrix();
 
 	cam.end();
