@@ -7,7 +7,12 @@ void ofApp::setup(){
 	ofSetFrameRate(60);
 	ofEnableAlphaBlending();
 
-	blur.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR_ALPHA);
+	buffer = (GLubyte *)malloc(ofGetWidth() * ofGetHeight() * 4);
+
+	image.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR_ALPHA);
+	fbo  .allocate(ofGetWidth(), ofGetHeight(), GL_ALPHA);
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+
 }
 
 //--------------------------------------------------------------
@@ -18,25 +23,33 @@ void ofApp::update(){
 	pos.x = ofGetWidth()  / 2 + 100 * sin(rad * 5);
 	pos.y = ofGetHeight() / 2 + 100 * cos(rad * 6);
 
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	ofSetColor(255, 255, 255, 128);
-	blur.draw(0, 0);
-		
-	ofSetColor(255,255,255,255);
+	fbo.begin();
+	ofSetColor(255, 255, 255, 200);
+	image.draw(0, 0);
+
+	ofSetColor(255,255,255,200);
 	ofCircle(pos, 30);
+	glReadPixels(0, 0, ofGetWidth(), ofGetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+    image.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+	image.setFromPixels(buffer, ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR);
+	fbo.end();
 
+	fbo.draw(0, 0);
 
-	blur.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-
+	
 
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
+
+	free(buffer);
 
 }
 

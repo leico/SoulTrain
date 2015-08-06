@@ -26,7 +26,10 @@ class ofApp : public ofxiOSApp{
 				double rad;
 				ofPoint pos;
 
-				ofImage blur;
+				ofImage image;
+				ofFbo   fbo;
+
+				unsigned char *buffer;
 
 };
 
