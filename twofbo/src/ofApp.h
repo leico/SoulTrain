@@ -24,12 +24,11 @@ class ofApp : public ofxiOSApp{
         void deviceOrientationChanged(int newOrientation);
 
 				double rad;
+
 				ofPoint pos;
 
-				ofImage image;
-				ofFbo   fbo;
-
-				unsigned char *buffer;
+				ofFbo blur;
+				ofFbo front;
 
 };
 
