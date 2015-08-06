@@ -7,6 +7,8 @@
 //  http://vstcpp.wpblog.jp/?page_id=728
 //
 
+#ifndef __basic_BIQUAD_FILTER_H__
+#define __basic_BIQUAD_FILTER_H__
 
 #include "ofMain.h"
 
@@ -23,7 +25,8 @@ class BiQuadFilter
 		float in1, in2;
 
 	public:
-		inline BiQuadFilter();
+		inline          BiQuadFilter(void);
+		inline virtual ~BiQuadFilter(void);
 
 		// 入力信号にフィルタを適用する関数
 		inline float Process(float in);
@@ -39,14 +42,22 @@ class BiQuadFilter
 		inline void AllPass  (float freq, float q , float samplerate = 44100.0f);
 };
 
+#endif 
+
 // --------------------------------------------------------------------------------
 // コンストラクタ
 // --------------------------------------------------------------------------------
-BiQuadFilter::BiQuadFilter() : 
+BiQuadFilter :: BiQuadFilter(void) : 
 	  a0(1),   a1(0), a2(0), // a0, 0以外にしておかないと除算でエラーになる
 	  b0(1),   b1(0), b2(0),
 	 in1(0),  in2(0), 
 	out1(0), out2(0){}
+
+
+// --------------------------------------------------------------------------------
+// デストラクタ
+// --------------------------------------------------------------------------------
+BiQuadFilter :: ~BiQuadFilter(void){}
 
 // --------------------------------------------------------------------------------
 // 入力信号にフィルタを適用する関数
@@ -205,3 +216,4 @@ void BiQuadFilter::AllPass(float freq, float q, float samplerate)
 	b1 = -2.0f * cos(omega);
 	b2 =  1.0f + alpha;
 }
+

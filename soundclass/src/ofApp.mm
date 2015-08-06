@@ -4,26 +4,24 @@
 void ofApp::setup(){	
 
 
+	ofSetLogLevel(OF_LOG_VERBOSE);
 	ofBackground(0);
 
 	ofSoundStreamSetup(0, 1, SAMPLING_RATE, BUF_SIZE, 1);
 
 	signalwave.setMode(OF_PRIMITIVE_LINE_STRIP);
-	lowwave   .setMode(OF_PRIMITIVE_LINE_STRIP);
-	highwave  .setMode(OF_PRIMITIVE_LINE_STRIP);
 
-	{
-		int width = ofGetWidth();
-		for(int i = 0 ; i < BUF_SIZE ; ++ i){
-			signalwave.addColor(ofColor(255));
-			low[i].x = high[i].x = vertices[i].x = i * width / BUF_SIZE;
-		}
+	for(int i = 0 ; i < BUF_SIZE ; ++ i){
+		vertices[i].x = i * (ofGetWidth() / BUF_SIZE);
+		signalwave.addColor(ofColor(255));
 	}
 
-	lowpass  .LowPass ( 200, 1.0, SAMPLING_RATE);
-	highpass .HighPass(5000, 1.0, SAMPLING_RATE);
+	low .Setup<AttackDetection :: LOWPASS> (200 , 1, SAMPLING_RATE);
+	high.Setup<AttackDetection :: HIGHPASS>(8000, 1, SAMPLING_RATE);
 
-	ofSetLogLevel(OF_LOG_VERBOSE);
+	low .Threshold(0.1);
+	high.Threshold(0.8);
+
 
 }
 
@@ -31,14 +29,10 @@ void ofApp::setup(){
 void ofApp::update(){
 
 	signalwave.clearVertices();
-	lowwave   .clearVertices();
-	highwave  .clearVertices();
 	signalwave.addVertices(vertices, BUF_SIZE);
-	lowwave   .addVertices(low,      BUF_SIZE);
-	highwave  .addVertices(high,     BUF_SIZE);
 
-	o_low  = (o_low  - 32 < 0) ? 0 : o_low  - 32;
-	o_high = (o_high - 32 < 0) ? 0 : o_high - 32;
+	o_low  = (o_low  - 8 < 0) ? 0 : o_low  - 8;
+	o_high = (o_high - 8 < 0) ? 0 : o_high - 8;
 
 }
 
@@ -46,8 +40,6 @@ void ofApp::update(){
 void ofApp::draw(){
 	
 	signalwave.draw();
-	lowwave.draw();
-	highwave.draw();
 
 	ofPushStyle();
 
@@ -121,26 +113,17 @@ void ofApp::audioIn(float *input, int buffersize, int n_channel){
 
 	int height   = ofGetHeight();
 	int base     = height / 2;
-	int lowbase  = base + height / 4;
-	int highbase = base - height / 4;
 
-	float lowsum  = 0;
-	float highsum = 0;
 
-	for(int i = 0 ; i < buffersize ; ++ i){
-		vertices[i].y = input[i];
-		low     [i].y = lowpass .Process(input[i]);
-		high    [i].y = highpass.Process(input[i]);
+	for(int i = 0 ; i < buffersize ; ++ i)
+		vertices[i].y = base + input[i] * 100;
 
-		lowsum  += abs(low [i].y);
-		highsum += abs(high[i].y);
-	}
 
-	ofLogVerbose() << "L_sum : " << lowsum ;
-	ofLogVerbose() << "H_sum : " << highsum;
 	
-	o_low  = ( (lowsum  / buffersize) > 0.05) ? 255 : o_low;
-	o_high = ( (highsum / buffersize) > 0.05) ? 255 : o_high;
-		
+	o_low  = low.Process<AttackDetection :: AVERAGE>
+				              (input, buffersize) ? 255 : o_low;
+
+	o_high = high.Process<AttackDetection :: MAXVALUE>
+		                   (input, buffersize) ? 255 : o_high;
 
 }

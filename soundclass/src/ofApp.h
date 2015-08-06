@@ -1,9 +1,12 @@
-#pragma once
+
+
+#ifndef __basic_OF_APP_H__
+#define __basic_OF_APP_H__
 
 #include "ofMain.h"
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
-#include "BiQuadFilter.h"
+#include "AttackDetection.h"
 
 class ofApp : public ofxiOSApp{
 	
@@ -29,22 +32,16 @@ class ofApp : public ofxiOSApp{
 				static const int BUF_SIZE      = 512;
 				static const int SAMPLING_RATE = 44100;
 
-				float buffer[BUF_SIZE];
-
 				ofMesh signalwave;
-				ofMesh lowwave;
-				ofMesh highwave;
 
 				ofPoint vertices[BUF_SIZE];
-				ofPoint low [BUF_SIZE];
-				ofPoint high[BUF_SIZE];
 
-				BiQuadFilter lowpass;
-				BiQuadFilter highpass;
+				AttackDetection low;
+				AttackDetection high;
 
 				unsigned char o_low;
 				unsigned char o_high;
 
 };
-
+#endif
 
