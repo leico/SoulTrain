@@ -25,6 +25,7 @@ void ofApp::setup(){
 	wave.Pos   ().Resist(0.05);
 	wave.BasePos   ( ofPoint(0, height / 2, 0), 0.1);
 	wave.BaseRotate( ofPoint(0,          0, 0), 0.1);
+	wave.OscAddress("/Wave/");
 
 	wave.Setup(width, 300, OF_PRIMITIVE_LINE_STRIP);
 

@@ -124,12 +124,14 @@ class WaveDraw : public BaseDraw{
 		 * =========================================== */
 		void Osc(const ofxOscMessage& m){
 
+			ofxOscMessage osc = m;
+
 
 			const string wave = "/Wave/";
 
-
 			const string address = m.getAddress();
 			const float  value   = m.getArgAsFloat(0);
+
 
 			{
 
@@ -138,21 +140,7 @@ class WaveDraw : public BaseDraw{
 				const string baserotate = base + "Rotate/";
 				const string basescale  = base + "Scale/";
 
-				if( address == basepos + "X/x"){
-					BasePos( ofPoint(value * 100, BasePos().Target().y, BasePos().Target().z), BasePos().Resist());
-					return;
-				}
-
-				if( address == basepos + "Y/x"){
-					BasePos( ofPoint(BasePos().Target().x, value * 100, BasePos().Target().z), BasePos().Resist());
-					return;
-				}
-
-				if( address == basepos + "Z/x"){
-					BasePos( ofPoint(BasePos().Target().x, BasePos().Target().y, value * 100), BasePos().Resist());
-					return;
-				}
-
+				Osc_BasePos(osc, 100);
 
 				if( address == baserotate + "X/x"){
 					BaseRotate( ofPoint(value * 10, BaseRotate().Target().y, BaseRotate().Target().z), BaseRotate().Resist());
