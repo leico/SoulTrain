@@ -68,6 +68,7 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* ofxiOS_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxiOS_Prefix.pch; sourceTree = "<group>"; };
+		3B25318D1BD8B3430091B29B /* Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		4A915AEA1B677800003FACB5 /* BiQuadFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BiQuadFilter.h; sourceTree = "<group>"; };
 		4A915AF81B67DC6C003FACB5 /* BlurDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurDraw.h; sourceTree = "<group>"; };
 		4A915AFE1B67E2BF003FACB5 /* PlaneDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneDraw.h; sourceTree = "<group>"; };
@@ -359,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				4A915AEA1B677800003FACB5 /* BiQuadFilter.h */,
+				3B25318D1BD8B3430091B29B /* Filter.h */,
 				4AAFCEF41B6B9B7100156D7B /* HPF.h */,
 				4AAFCEF31B6B8B9000156D7B /* LPF.h */,
 				E4D8936B11527B74007E1F53 /* main.mm */,

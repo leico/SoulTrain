@@ -36,7 +36,8 @@ class WaveDraw : public BaseDraw{
 		/* =========================================== *
 		 * Constructor/Destructor                      *
 		 * =========================================== */
-	 	 WaveDraw(){};
+	 	 WaveDraw() : BaseDraw("/Wave/")
+     {};
 		~WaveDraw(){};
 
 		/* =========================================== *
@@ -117,6 +118,10 @@ class WaveDraw : public BaseDraw{
 			
 			signalwave.clearColors();
 			signalwave.addColors(colors);
+
+      ofLogVerbose() << BasePos().Current();
+      ofLogVerbose() << BasePos().Target();
+      ofLogVerbose() << BasePos().Resist();
 		}
 
 		/* =========================================== *

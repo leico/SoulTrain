@@ -19,25 +19,26 @@ class BaseDraw{
 	
 	private:
 
-		Change<ofPoint> base_pos;
-		Change<ofPoint> base_rotate;
-		Change<ofPoint> base_scale;
+		Change<ofPoint> _base_pos;
+		Change<ofPoint> _base_rotate;
+		Change<ofPoint> _base_scale;
 
-		Change<ofPoint> pos;
-		Change<ofPoint> rotate;
-		Change<ofPoint> scale;
+		Change<ofPoint> _pos;
+		Change<ofPoint> _rotate;
+		Change<ofPoint> _scale;
 
-		Change<ofColor> color;
+		Change<ofColor> _color;
 
-		bool blur;
+		bool _blur;
 
-		std :: string address;
+		std :: string _address;
 
 	public:
 		/* ======================================= *
 		 * Constructor/Destructor                  *
 		 * ======================================= */
 		        inline  BaseDraw();
+            inline  BaseDraw(const std :: string& address);
 		virtual inline ~BaseDraw();
 
 		/* ======================================= *
@@ -169,7 +170,9 @@ class BaseDraw{
 		/* ======================================= *
 		 * Osc_BasePos                             *
 		 * ======================================= */
-		inline ofxOscMessage& Osc_BasePos(ofxOscMessage& m, float magnificate);
+		inline ofxOscMessage& Osc_BasePos   (ofxOscMessage& m, float magnificate);
+    inline ofxOscMessage& Osc_BaseRotate(ofxOscMessage& m, float magnificate);
+    
 };
 
 // ------------------------------------------------------------------
@@ -182,19 +185,43 @@ BaseDraw :: BaseDraw(){
 		ofPoint zero(0, 0, 0);
 		ofPoint one (1, 1, 1);
 
-		base_pos   .Setup(zero, zero, 0);
-		base_rotate.Setup(zero, zero, 0);
-		base_scale .Setup(one, one, 0);
+		_base_pos   .Setup(zero, zero, 0);
+		_base_rotate.Setup(zero, zero, 0);
+		_base_scale .Setup(one, one, 0);
 
-		pos    = base_pos;
-		rotate = base_rotate;
-		scale  = base_scale;
+		_pos    = _base_pos;
+		_rotate = _base_rotate;
+		_scale  = _base_scale;
 	}
 	{
 		ofColor zero(0, 0, 0, 0);
 
-		color  .Setup(zero, zero, 0);
+		_color  .Setup(zero, zero, 0);
 	}
+}
+
+
+BaseDraw :: BaseDraw(const std :: string& address) : 
+_address(address)
+{
+	{
+		ofPoint zero(0, 0, 0);
+		ofPoint one (1, 1, 1);
+
+		_base_pos   .Setup(zero, zero, 0);
+		_base_rotate.Setup(zero, zero, 0);
+		_base_scale .Setup(one, one, 0);
+
+		_pos    = _base_pos;
+		_rotate = _base_rotate;
+		_scale  = _base_scale;
+	}
+	{
+		ofColor zero(0, 0, 0, 0);
+
+		_color  .Setup(zero, zero, 0);
+	}
+
 }
 
 BaseDraw :: ~BaseDraw(){
@@ -206,12 +233,12 @@ BaseDraw :: ~BaseDraw(){
  * Get/Set OscAddress                      *
  * ======================================= */
 const std :: string& BaseDraw :: OscAddress(void){
-	return address;
+	return _address;
 }
 
 const std :: string& BaseDraw :: OscAddress(const std :: string& address){
-	this -> address = address;
-	return this -> address;
+	       _address = address;
+	return _address;
 }
 
 
@@ -222,17 +249,17 @@ const std :: string& BaseDraw :: OscAddress(const std :: string& address){
  * Get/Set BasePos                         *
  * ======================================= */
 Change<ofPoint>& BaseDraw :: BasePos(void){
-	return base_pos; 
+	return _base_pos; 
 }
 
-Change<ofPoint>& BaseDraw :: BasePos(const Change<ofPoint>& pos){
-	base_pos = pos;
-	return base_pos;
+Change<ofPoint>& BaseDraw :: BasePos(const Change<ofPoint>& basepos){
+	       _base_pos = basepos;
+	return _base_pos;
 }
 
 Change<ofPoint>& BaseDraw :: BasePos(const ofPoint& target, const float resist){
 	return BasePos(
-		Change<ofPoint>(base_pos.Current(), target, resist)
+		Change<ofPoint>(_base_pos.Current(), target, resist)
 	);
 }
 
@@ -242,17 +269,17 @@ Change<ofPoint>& BaseDraw :: BasePos(const ofPoint& target, const float resist){
  * Get/Set BaseRotate                      *
  * ======================================= */
 Change<ofPoint>& BaseDraw :: BaseRotate(void){
-	return base_rotate; 
+	return _base_rotate; 
 }
 
-Change<ofPoint>& BaseDraw :: BaseRotate(const Change<ofPoint>& rotate){
-	base_rotate = rotate;
-	return base_rotate;
+Change<ofPoint>& BaseDraw :: BaseRotate(const Change<ofPoint>& baserotate){
+	       _base_rotate = baserotate;
+	return _base_rotate;
 }
 
 Change<ofPoint>& BaseDraw :: BaseRotate(const ofPoint& target, const float resist){
 	return BaseRotate(
-		Change<ofPoint>(base_rotate.Current(), target, resist)
+		Change<ofPoint>(_base_rotate.Current(), target, resist)
 	);
 }
 
@@ -262,17 +289,17 @@ Change<ofPoint>& BaseDraw :: BaseRotate(const ofPoint& target, const float resis
  * Get/Set BaseScale                       *
  * ======================================= */
 Change<ofPoint>& BaseDraw :: BaseScale(void){
-	return base_scale; 
+	return _base_scale; 
 }
 
-Change<ofPoint>& BaseDraw :: BaseScale(const Change<ofPoint>& scale){
-	base_scale = scale;
-	return base_scale;
+Change<ofPoint>& BaseDraw :: BaseScale(const Change<ofPoint>& basescale){
+	       _base_scale = basescale;
+	return _base_scale;
 }
 
 Change<ofPoint>& BaseDraw :: BaseScale(const ofPoint& target, const float resist){
 	return BaseScale(
-		Change<ofPoint>(base_scale.Current(), target, resist)
+		Change<ofPoint>(_base_scale.Current(), target, resist)
 	);
 }
 
@@ -283,12 +310,12 @@ Change<ofPoint>& BaseDraw :: BaseScale(const ofPoint& target, const float resist
  * Get/Set Pos                             *
  * ======================================= */
 Change<ofPoint>& BaseDraw :: Pos(void){
-	return pos; 
+	return _pos; 
 }
 
 Change<ofPoint>& BaseDraw :: Pos(const Change<ofPoint>& pos){
-	this -> pos = pos;
-	return this -> pos;
+	       _pos = pos;
+	return _pos;
 }
 
 
@@ -316,12 +343,12 @@ Change<ofPoint>& BaseDraw :: CurrentPos(const ofPoint& current, const float resi
  * Get/Set Rotate                          *
  * ======================================= */
 Change<ofPoint>& BaseDraw :: Rotate(void){
-	return rotate; 
+	return _rotate; 
 }
 
 Change<ofPoint>& BaseDraw :: Rotate(const Change<ofPoint>& rotate){
-	       this -> rotate = rotate;
-	return this -> rotate;
+	       _rotate = rotate;
+	return _rotate;
 }
 
 /* ======================================= *
@@ -348,12 +375,12 @@ Change<ofPoint>& BaseDraw :: CurrentRotate(const ofPoint& current, const float r
  * Get/Set Scale                           *
  * ======================================= */
 Change<ofPoint>& BaseDraw :: Scale(void){
-	return scale;
+	return _scale;
 }
 
 Change<ofPoint>& BaseDraw :: Scale(const Change<ofPoint>& scale){
-	this -> scale = scale;
-	return this -> scale;
+	       _scale = scale;
+	return _scale;
 }
 
 /* ======================================= *
@@ -381,12 +408,12 @@ Change<ofPoint>& BaseDraw :: CurrentScale(const ofPoint& current, const float re
  * Get/Set Color                           *
  * ======================================= */
 Change<ofColor>& BaseDraw :: Color(void){
-	return color; 
+	return _color; 
 }
 
 Change<ofColor>& BaseDraw :: Color(const Change<ofColor>& color){
-	this -> color = color;
-	return this -> color;
+	       _color = color;
+	return _color;
 }
 
 /* ======================================= *
@@ -413,12 +440,12 @@ Change<ofColor>& BaseDraw :: CurrentColor(const ofColor& current, const float re
  * get/set Blurflag                        *
  * ======================================= */
 bool BaseDraw :: Blur(void){
-	return blur;
+	return _blur;
 }
 
 bool BaseDraw :: Blur(const bool blur){
-	this -> blur = blur;
-	return this -> blur;
+	       _blur = blur;
+	return _blur;
 }
 
 // ------------------------------------------------------------------
@@ -426,14 +453,14 @@ bool BaseDraw :: Blur(const bool blur){
  * Update                                  *
  * ======================================= */
 void BaseDraw :: Update(void){
-	base_pos   .Update();
-	base_rotate.Update();
-	base_scale .Update();
+	_base_pos   .Update();
+	_base_rotate.Update();
+	_base_scale .Update();
 
-	pos    .Update();
-	rotate .Update();
-	scale  .Update();
-	color  .Update();
+	_pos    .Update();
+	_rotate .Update();
+	_scale  .Update();
+	_color  .Update();
 
 }
 
@@ -445,12 +472,15 @@ void BaseDraw :: Update(void){
  * ======================================= */
 ofxOscMessage& BaseDraw :: Osc_BasePos(ofxOscMessage& m, float magnificate){
 
-	const string basepos = address + "Base/Pos/";
+	const string basepos = _address + "Base/Pos/";
 
 	const string address = m.getAddress();
 	const float  value   = m.getArgAsFloat(0);
 
+  ofLogVerbose() << value * magnificate;
+
 	if( address == basepos + "X/x"){
+
 		BasePos(
 				ofPoint(value * magnificate, BasePos().Target().y, BasePos().Target().z)
 			, BasePos().Resist()
