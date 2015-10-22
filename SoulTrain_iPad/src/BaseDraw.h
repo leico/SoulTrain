@@ -477,8 +477,6 @@ ofxOscMessage& BaseDraw :: Osc_BasePos(ofxOscMessage& m, float magnificate){
 	const string address = m.getAddress();
 	const float  value   = m.getArgAsFloat(0);
 
-  ofLogVerbose() << value * magnificate;
-
 	if( address == basepos + "X/x"){
 
 		BasePos(
@@ -514,6 +512,36 @@ ofxOscMessage& BaseDraw :: Osc_BasePos(ofxOscMessage& m, float magnificate){
 	return m;
 }
 
+/* ======================================= *
+ * Osc_BaseRotate                          *
+ * ======================================= */
+ofxOscMessage& BaseDraw :: Osc_BaseRotate(ofxOscMessage& m, float magnificate){
+
+  const string baserotate = _address + "Base/Rotate/";
+  
+  const string address = m.getAddress();
+  const float  value   = m.getArgAsFloat(0);
+
+  if( address == baserotate + "X/x"){
+    BaseRotate( ofPoint(value * magnificate, BaseRotate().Target().y, BaseRotate().Target().z), BaseRotate().Resist() );
+    m.clear();
+    return m;
+  }
+
+  if( address == baserotate + "Y/x"){
+    BaseRotate( ofPoint(BaseRotate().Target().x, value * magnificate, BaseRotate().Target().z), BaseRotate().Resist() );
+    m.clear();
+    return m;
+  }
+
+  if( address == baserotate + "Z/x"){
+    BaseRotate( ofPoint(BaseRotate().Target().x, BaseRotate().Target().y, value * magnificate), BaseRotate().Resist() );
+    m.clear();
+    return m;
+  }
+
+  return m;
+}
 
 
 #endif /* defined(__basic__BaseDraw__) */

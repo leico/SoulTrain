@@ -119,9 +119,6 @@ class WaveDraw : public BaseDraw{
 			signalwave.clearColors();
 			signalwave.addColors(colors);
 
-      ofLogVerbose() << BasePos().Current();
-      ofLogVerbose() << BasePos().Target();
-      ofLogVerbose() << BasePos().Resist();
 		}
 
 		/* =========================================== *
@@ -145,8 +142,9 @@ class WaveDraw : public BaseDraw{
 				const string baserotate = base + "Rotate/";
 				const string basescale  = base + "Scale/";
 
-				Osc_BasePos(osc, 100);
-
+				Osc_BasePos   (osc, 100);
+        Osc_BaseRotate(osc,  10);
+/*
 				if( address == baserotate + "X/x"){
 					BaseRotate( ofPoint(value * 10, BaseRotate().Target().y, BaseRotate().Target().z), BaseRotate().Resist());
 					return;
@@ -161,7 +159,7 @@ class WaveDraw : public BaseDraw{
 					BaseRotate( ofPoint(BaseRotate().Target().x, BaseRotate().Target().y, value * 10), BaseRotate().Resist());
 					return;
 				}
-
+*/
 
 
 				if( address == basescale + "X/x"){
