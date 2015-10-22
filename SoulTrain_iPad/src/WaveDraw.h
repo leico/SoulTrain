@@ -144,23 +144,6 @@ class WaveDraw : public BaseDraw{
 
 				Osc_BasePos   (osc, 100);
         Osc_BaseRotate(osc,  10);
-/*
-				if( address == baserotate + "X/x"){
-					BaseRotate( ofPoint(value * 10, BaseRotate().Target().y, BaseRotate().Target().z), BaseRotate().Resist());
-					return;
-				}
-
-				if( address == baserotate + "Y/x"){
-					BaseRotate( ofPoint(BaseRotate().Target().x, value * 10, BaseRotate().Target().z), BaseRotate().Resist());
-					return;
-				}
-
-				if( address == baserotate + "Z/x"){
-					BaseRotate( ofPoint(BaseRotate().Target().x, BaseRotate().Target().y, value * 10), BaseRotate().Resist());
-					return;
-				}
-*/
-
 
 				if( address == basescale + "X/x"){
 					BaseScale( ofPoint(value * 10, BaseScale().Target().y, BaseScale().Target().z), BaseScale().Resist());
