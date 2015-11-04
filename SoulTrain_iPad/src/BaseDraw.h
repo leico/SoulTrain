@@ -171,7 +171,16 @@ class BaseDraw{
 		 * Osc_BasePos                             *
 		 * ======================================= */
 		inline ofxOscMessage& Osc_BasePos   (ofxOscMessage& m, float magnificate);
+
+		/* ======================================= *
+		 * Osc_BaseRotate                          *
+		 * ======================================= */
     inline ofxOscMessage& Osc_BaseRotate(ofxOscMessage& m, float magnificate);
+
+		/* ======================================= *
+		 * Osc_BaseScale                           *
+		 * ======================================= */
+    inline ofxOscMessage& Osc_BaseScale (ofxOscMessage& m, float magnificate);
     
 };
 
@@ -523,19 +532,31 @@ ofxOscMessage& BaseDraw :: Osc_BaseRotate(ofxOscMessage& m, float magnificate){
   const float  value   = m.getArgAsFloat(0);
 
   if( address == baserotate + "X/x"){
-    BaseRotate( ofPoint(value * magnificate, BaseRotate().Target().y, BaseRotate().Target().z), BaseRotate().Resist() );
+    BaseRotate(
+        ofPoint(value * magnificate, BaseRotate().Target().y, BaseRotate().Target().z)
+      , BaseRotate().Resist()
+    );
+
     m.clear();
     return m;
   }
 
   if( address == baserotate + "Y/x"){
-    BaseRotate( ofPoint(BaseRotate().Target().x, value * magnificate, BaseRotate().Target().z), BaseRotate().Resist() );
+    BaseRotate(
+        ofPoint(BaseRotate().Target().x, value * magnificate, BaseRotate().Target().z)
+      , BaseRotate().Resist()
+    );
+
     m.clear();
     return m;
   }
 
   if( address == baserotate + "Z/x"){
-    BaseRotate( ofPoint(BaseRotate().Target().x, BaseRotate().Target().y, value * magnificate), BaseRotate().Resist() );
+    BaseRotate( 
+        ofPoint(BaseRotate().Target().x, BaseRotate().Target().y, value * magnificate)
+      , BaseRotate().Resist() 
+    );
+
     m.clear();
     return m;
   }
@@ -543,5 +564,47 @@ ofxOscMessage& BaseDraw :: Osc_BaseRotate(ofxOscMessage& m, float magnificate){
   return m;
 }
 
+/* ======================================= *
+ * Osc_BaseScale                           *
+ * ======================================= */
+ofxOscMessage& BaseDraw :: Osc_BaseScale(ofxOscMessage& m, float magnificate){
+
+  const string basescale = _address + "Base/Scale/";
+
+  const string address = m.getAddress();
+  const float  value   = m.getArgAsFloat(0);
+
+  if( address == basescale + "X/x"){
+    BaseScale( 
+        ofPoint(value * magnificate, BaseScale().Target().y, BaseScale().Target().z)
+      , BaseScale().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+
+  if( address == basescale + "Y/x"){
+    BaseScale( 
+        ofPoint(BaseScale().Target().x, value * magnificate, BaseScale().Target().z)
+      , BaseScale().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+
+  if( address == basescale + "Z/x"){
+    BaseScale( 
+        ofPoint(BaseScale().Target().x, BaseScale().Target().y, value * magnificate)
+      , BaseScale().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+
+  return m;
+}
 
 #endif /* defined(__basic__BaseDraw__) */
