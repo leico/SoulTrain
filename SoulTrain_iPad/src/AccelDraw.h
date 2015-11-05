@@ -123,6 +123,8 @@ class AccelDraw : public BaseDraw{
 		const string scale  = accel + "Scale/";
 
     if( Osc_Rotate(osc, 10).getNumArgs() == 0) return;
+    if( Osc_Scale (osc,  1).getNumArgs() == 0) return;
+    if( Osc_Color (osc)    .getNumArgs() == 0) return;
 
 		if( address == rotate + "Kick/x"){
 			rotateparam.kick = value == 1;
@@ -137,7 +139,6 @@ class AccelDraw : public BaseDraw{
 			return;
 		}
 
-    if( Osc_Scale(osc, 1).getNumArgs() == 0) return;
 
 
 		if( address == scale + "Kick/x"){
@@ -170,29 +171,6 @@ class AccelDraw : public BaseDraw{
 			Rotate().Resist( value );
 
 			Color().Resist ( value );
-		}
-
-
-
-		const string  color  = accel + "Color/";
-		const ofColor target = Color().Target();
-		const float   resist = Color().Resist();
-
-		if( address == color + "R/x"){
-			TargetColor( ofColor(value * 255, target.g, target.b, target.a), resist);
-			return;
-		}
-		if( address == color + "G/x"){
-			TargetColor( ofColor(target.r, value * 255, target.b, target.a), resist);
-			return;
-		}
-		if( address == color + "B/x"){
-			TargetColor( ofColor(target.r, target.g, value * 255, target.a), resist);
-			return;
-		}
-		if( address == color + "A/x"){
-			TargetColor( ofColor(target.r, target.g, target.b, value * 255), resist);
-			return;
 		}
 
 
