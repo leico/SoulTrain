@@ -162,18 +162,7 @@ class WaveDraw : public BaseDraw{
           return;
         }
 
-        if( address == rotate + "X/x"){
-          TargetRotate( ofPoint(value * 10, Rotate().Target().y, Rotate().Target().z), Rotate().Resist());
-          return;
-        }
-        if( address == rotate + "Y/x"){
-          TargetRotate( ofPoint(Rotate().Target().x, value * 10, Rotate().Target().z), Rotate().Resist());
-          return;
-        }
-        if( address == rotate + "Z/x"){
-          TargetRotate( ofPoint(Rotate().Target().x, Rotate().Target().y, value * 10), Rotate().Resist());
-          return;
-        }
+        Osc_Rotate(osc, 10);
 
         if( address == rotate + "Kick/x"){
           rotateparam.kick = value == 1;

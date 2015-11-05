@@ -190,6 +190,10 @@ class BaseDraw{
 		 * ======================================= */
     inline ofxOscMessage& Osc_Pos(ofxOscMessage& m, float magnificate);
 
+		/* ======================================= *
+		 * Osc_Rotate                              *
+		 * ======================================= */
+    inline ofxOscMessage& Osc_Rotate(ofxOscMessage& m, float magnificate);
 
     
 };
@@ -660,5 +664,46 @@ ofxOscMessage& BaseDraw :: Osc_Pos(ofxOscMessage& m, float magnificate){
   return m;
 }
 
+/* ======================================= *
+ * Osc_Rotate                              *
+ * ======================================= */
+ofxOscMessage& BaseDraw :: Osc_Rotate(ofxOscMessage& m, float magnificate){
+
+  const string rotate = _address + "Rotate/";
+
+  const string address = m.getAddress();
+  const float  value   = m.getArgAsFloat(0);
+
+
+  if( address == rotate + "X/x"){
+    TargetRotate( 
+        ofPoint(value * magnificate, Rotate().Target().y, Rotate().Target().z)
+      , Rotate().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+  if( address == rotate + "Y/x"){
+    TargetRotate( 
+        ofPoint(Rotate().Target().x, value * magnificate, Rotate().Target().z)
+      , Rotate().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+  if( address == rotate + "Z/x"){
+    TargetRotate( 
+        ofPoint(Rotate().Target().x, Rotate().Target().y, value * magnificate)
+      , Rotate().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+
+  return m;
+}
 
 #endif /* defined(__basic__BaseDraw__) */
