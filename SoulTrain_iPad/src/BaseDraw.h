@@ -195,6 +195,19 @@ class BaseDraw{
 		 * ======================================= */
     inline ofxOscMessage& Osc_Rotate(ofxOscMessage& m, float magnificate);
 
+		/* ======================================= *
+		 * Osc_Scale                               *
+		 * ======================================= */
+    inline ofxOscMessage& Osc_Scale(ofxOscMessage& m, float magnificate);
+
+    // ------------------------------------------------------------------------
+		/* ======================================= *
+		 * Osc_Color                               *
+		 * ======================================= */
+    inline ofxOscMessage& Osc_Color(ofxOscMessage& m);
+
+
+
     
 };
 
@@ -697,6 +710,104 @@ ofxOscMessage& BaseDraw :: Osc_Rotate(ofxOscMessage& m, float magnificate){
     TargetRotate( 
         ofPoint(Rotate().Target().x, Rotate().Target().y, value * magnificate)
       , Rotate().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+
+  return m;
+}
+
+/* ======================================= *
+ * Osc_Scale                               *
+ * ======================================= */
+inline ofxOscMessage& BaseDraw :: Osc_Scale(ofxOscMessage &m, float magnificate){
+
+
+  const string scale = _address + "Scale/";
+
+  const string address = m.getAddress();
+  const float  value   = m.getArgAsFloat(0);
+
+
+  if( address == scale + "X/x"){
+    TargetScale( 
+        ofPoint(value * magnificate, Scale().Target().y, Scale().Target().z)
+      , Scale().Resist()
+    );
+
+    m.clear();
+    return m;
+  }
+  if( address == scale + "Y/x"){
+    TargetScale( 
+        ofPoint(Scale().Target().x, value * magnificate, Scale().Target().z)
+      , Scale().Resist());
+
+    m.clear();
+    return m;
+  }
+  if( address == scale + "Z/x"){
+    TargetScale( 
+        ofPoint(Scale().Target().x, Scale().Target().y, value * magnificate)
+      , Scale().Resist()
+    );
+    
+    m.clear();
+    return m;
+  }
+
+  return m;
+}
+
+
+// ------------------------------------------------------------------
+/* ======================================= *
+ * Osc_Color                               *
+ * ======================================= */
+inline ofxOscMessage& BaseDraw :: Osc_Color(ofxOscMessage& m){
+
+  const string color = _address + "Color/";
+
+  const string address = m.getAddress();
+  const float  value   = m.getArgAsFloat(0);
+
+
+  const ofColor target = Color().Target();
+  const float   resist = Color().Resist();
+
+  if( address == color + "R/x"){
+    TargetColor( 
+        ofColor(value * 255, target.g, target.b, target.a)
+      , resist
+    );
+
+    m.clear();
+    return m;
+  }
+  if( address == color + "G/x"){
+    TargetColor( 
+        ofColor(target.r, value * 255, target.b, target.a)
+      , resist
+    );
+
+    m.clear();
+    return m;
+  }
+  if( address == color + "B/x"){
+    TargetColor( 
+        ofColor(target.r, target.g, value * 255, target.a)
+      , resist
+    );
+    
+    m.clear();
+    return m;
+  }
+  if( address == color + "A/x"){
+    TargetColor( 
+        ofColor(target.r, target.g, target.b, value * 255)
+      , resist
     );
 
     m.clear();

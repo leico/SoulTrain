@@ -36,8 +36,7 @@ class WaveDraw : public BaseDraw{
     /* =========================================== *
      * Constructor/Destructor                      *
      * =========================================== */
-    WaveDraw() : BaseDraw("/Wave/")
-  {};
+    WaveDraw () : BaseDraw("/Wave/") {};
     ~WaveDraw(){};
 
     /* =========================================== *
@@ -136,9 +135,15 @@ class WaveDraw : public BaseDraw{
 
 
 
-      Osc_BasePos   (osc, 100);
-      Osc_BaseRotate(osc,  10);
-      Osc_BaseScale (osc,   1);
+      if( Osc_BasePos   (osc, 100).getNumArgs() == 0) return;
+      if( Osc_BaseRotate(osc,  10).getNumArgs() == 0) return;
+      if( Osc_BaseScale (osc,   1).getNumArgs() == 0) return;
+
+      if( Osc_Pos   (osc, 100).getNumArgs() == 0) return;
+      if( Osc_Rotate(osc,  10).getNumArgs() == 0) return;
+      if( Osc_Scale (osc,   1).getNumArgs() == 0) return;
+
+      if( Osc_Color(osc).getNumArgs() == 0) return;
 
       {
 
@@ -146,8 +151,6 @@ class WaveDraw : public BaseDraw{
         const string rotate = wave + "Rotate/";
         const string scale  = wave + "Scale/";
 
-
-        Osc_Pos(osc, 100);
 
         if( address == pos + "Kick/x"){
           posparam.kick = value == 1;
@@ -162,8 +165,6 @@ class WaveDraw : public BaseDraw{
           return;
         }
 
-        Osc_Rotate(osc, 10);
-
         if( address == rotate + "Kick/x"){
           rotateparam.kick = value == 1;
           return;
@@ -174,19 +175,6 @@ class WaveDraw : public BaseDraw{
         }
         if( address == rotate + "Swing/x"){
           rotateparam.amp = value * 10;
-          return;
-        }
-
-        if( address == scale + "X/x"){
-          TargetScale( ofPoint(value, Scale().Target().y, Scale().Target().z), Scale().Resist());
-          return;
-        }
-        if( address == scale + "Y/x"){
-          TargetScale( ofPoint(Scale().Target().x, value, Scale().Target().z), Scale().Resist());
-          return;
-        }
-        if( address == scale + "Z/x"){
-          TargetScale( ofPoint(Scale().Target().x, Scale().Target().y, value), Scale().Resist());
           return;
         }
 
@@ -220,28 +208,6 @@ class WaveDraw : public BaseDraw{
 
         Color().Resist ( value );
       }
-
-      const string  color  = wave + "Color/";
-      const ofColor target = Color().Target();
-      const float   resist = Color().Resist();
-
-      if( address == color + "R/x"){
-        TargetColor( ofColor(value * 255, target.g, target.b, target.a), resist);
-        return;
-      }
-      if( address == color + "G/x"){
-        TargetColor( ofColor(target.r, value * 255, target.b, target.a), resist);
-        return;
-      }
-      if( address == color + "B/x"){
-        TargetColor( ofColor(target.r, target.g, value * 255, target.a), resist);
-        return;
-      }
-      if( address == color + "A/x"){
-        TargetColor( ofColor(target.r, target.g, target.b, value * 255), resist);
-        return;
-      }
-
 
 
     }

@@ -32,7 +32,7 @@ class AccelDraw : public BaseDraw{
 	/* ========================================== *
 	 * Constructor/Destructor                     *
 	 * ========================================== */
-	 AccelDraw(){};
+	 AccelDraw() : BaseDraw("/Accel/") {};
 	~AccelDraw(){};
 
 	/* ========================================== *
