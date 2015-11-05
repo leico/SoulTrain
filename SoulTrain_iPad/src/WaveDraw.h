@@ -146,19 +146,8 @@ class WaveDraw : public BaseDraw{
         const string rotate = wave + "Rotate/";
         const string scale  = wave + "Scale/";
 
-        if( address == pos + "X/x"){
 
-          TargetPos( ofPoint(value * 100, Pos().Target().y, Pos().Target().z), Pos().Resist());
-          return;
-        }
-        if( address == pos + "Y/x"){
-          TargetPos( ofPoint(Pos().Target().x, value * 100, Pos().Target().z), Pos().Resist());
-          return;
-        }
-        if( address == pos + "Z/x"){
-          TargetPos( ofPoint(Pos().Target().x, Pos().Target().y, value * 100), Pos().Resist());
-          return;
-        }
+        Osc_Pos(osc, 100);
 
         if( address == pos + "Kick/x"){
           posparam.kick = value == 1;
