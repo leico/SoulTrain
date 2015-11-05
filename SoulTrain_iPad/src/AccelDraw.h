@@ -137,18 +137,8 @@ class AccelDraw : public BaseDraw{
 			return;
 		}
 
-		if( address == scale + "X/x"){
-			TargetScale( ofPoint(value, Scale().Target().y, Scale().Target().z), Scale().Resist());
-			return;
-		}
-		if( address == scale + "Y/x"){
-			TargetScale( ofPoint(Scale().Target().x, value, Scale().Target().z), Scale().Resist());
-			return;
-		}
-		if( address == scale + "Z/x"){
-			TargetScale( ofPoint(Scale().Target().x, Scale().Target().y, value), Scale().Resist());
-			return;
-		}
+    if( Osc_Scale(osc, 1).getNumArgs() == 0) return;
+
 
 		if( address == scale + "Kick/x"){
 			scaleparam.kick = value == 1;
